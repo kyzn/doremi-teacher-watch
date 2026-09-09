@@ -6,8 +6,6 @@ struct ListeningQuestion: Identifiable, Equatable {
     let id: UUID
     let naming: NoteNaming
     let noteSet: NoteSet
-    let referenceSoundOn: Bool
-    let reference: NaturalName
     /// Written pitch the learner must name.
     let target: PitchClass
     /// Four written pitches including the target, already shuffled. Distinct sounds by
@@ -19,7 +17,6 @@ struct ListeningQuestion: Identifiable, Equatable {
     }
 
     var targetFrequency: Double { naming.frequency(forWritten: target) }
-    var referenceFrequency: Double { naming.frequency(forWritten: reference.written) }
 }
 
 /// Picks targets and distractors from the active note set. Generic over the random source so
@@ -49,8 +46,6 @@ struct QuestionGenerator<RNG: RandomNumberGenerator> {
             id: UUID(),
             naming: settings.naming,
             noteSet: settings.noteSet,
-            referenceSoundOn: settings.referenceSoundOn,
-            reference: settings.referenceNatural,
             target: target,
             choices: choices
         )

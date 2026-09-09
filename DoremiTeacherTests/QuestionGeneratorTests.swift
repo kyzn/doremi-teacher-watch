@@ -46,16 +46,11 @@ final class QuestionGeneratorTests: XCTestCase {
         XCTAssertEqual(positions, [0, 1, 2, 3])
     }
 
-    func testQuestionFreezesNamingAndReference() {
+    func testQuestionFreezesNaming() {
         var generator = QuestionGenerator(rng: SeededRandomNumberGenerator(seed: 4))
         let q = generator.listeningQuestion(settings: settings(.seven, naming: sazNaming), avoiding: nil)
         XCTAssertEqual(q.naming, sazNaming)
-        XCTAssertEqual(q.reference, .d)
-        XCTAssertEqual(q.referenceFrequency, 659.26, accuracy: 0.01)
+        XCTAssertEqual(q.noteSet, .seven)
         XCTAssertEqual(q.targetFrequency, sazNaming.frequency(forWritten: q.target))
-
-        let standard = generator.listeningQuestion(settings: settings(.seven), avoiding: nil)
-        XCTAssertEqual(standard.reference, .c)
-        XCTAssertEqual(standard.referenceFrequency, 523.25, accuracy: 0.01)
     }
 }

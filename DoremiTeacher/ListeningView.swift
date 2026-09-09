@@ -1,7 +1,6 @@
 import SwiftUI
 
-/// "Hear → Guess": the anchor plays, then the hidden target; the learner picks one of four.
-/// Nothing on screen names the target before an answer: the caption names only the anchor.
+/// "Hear → Guess": the hidden note plays; the learner picks one of four.
 struct ListeningView: View {
     @StateObject private var session: ListeningSession
     private let script = SyllableScript.forCurrentLocale()
@@ -80,16 +79,10 @@ struct ListeningView: View {
         .minimumScaleFactor(0.6)
     }
 
-    /// The anchor is named inside the button so it costs no vertical space: "Re, then ?".
     private var playTitle: Text {
         if session.isPlaying { return Text("Playing…") }
         if session.playbackError != nil { return Text("Retry") }
-        if session.hasHeardQuestion { return Text("Replay") }
-        if session.question.referenceSoundOn {
-            let anchor = session.question.naming.label(forWritten: session.question.reference.written, script: script)
-            return Text("\(anchor), then ?")
-        }
-        return Text("Play")
+        return session.hasHeardQuestion ? Text("Replay") : Text("Play")
     }
 
     private var playSymbol: String {

@@ -17,20 +17,15 @@ final class SettingsStoreTests: XCTestCase {
         XCTAssertEqual(store.settings, .default)
         XCTAssertEqual(store.settings.naming.relationship, .standard)
         XCTAssertEqual(store.settings.noteSet, .seven)
-        XCTAssertTrue(store.settings.referenceSoundOn)
-        XCTAssertEqual(store.settings.referenceNatural, .c)
     }
 
     func testSurvivesRelaunch() {
         let store = SettingsStore(defaults: defaults)
         store.settings.naming = sazNaming
         store.settings.noteSet = .twelve
-        store.settings.referenceSoundOn = false
         let reloaded = SettingsStore(defaults: defaults)
         XCTAssertEqual(reloaded.settings.naming, sazNaming)
         XCTAssertEqual(reloaded.settings.noteSet, .twelve)
-        XCTAssertFalse(reloaded.settings.referenceSoundOn)
-        XCTAssertEqual(reloaded.settings.referenceNatural, .d)
     }
 
     func testLettersDropInstrumentNaming() {

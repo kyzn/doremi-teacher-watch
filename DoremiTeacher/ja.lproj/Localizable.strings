@@ -6,7 +6,6 @@
 "Replay" = "もう一度";
 "Playing…" = "再生中…";
 "Retry" = "再試行";
-"%@, then ?" = "%@ → ?";
 "Correct" = "正解";
 "Not quite" = "残念";
 "sounds %@" = "実音 %@";
@@ -24,7 +23,6 @@
 "Accidentals" = "臨時記号";
 "Prefer sharps" = "♯を優先";
 "Prefer flats" = "♭を優先";
-"Reference sound" = "基準音";
 "Standard: Do sounds C. My instrument: you say which note one name sounds like, and every name shifts with it." = "標準: ドは C の音。自分の楽器: ひとつの音名がどの実音かを指定すると、全部の音名がそれに合わせてずれます。";
 "My %@ sounds like" = "自分の%@の実音";
 "Reference name" = "基準の音名";

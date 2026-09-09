@@ -9,8 +9,6 @@ struct PracticeSettings: Equatable, Codable {
     var schemaVersion = currentSchemaVersion
     var naming = NoteNaming()
     var noteSet: NoteSet = .seven
-    /// Play the named anchor before the hidden target.
-    var referenceSoundOn = true
 
     static let `default` = PracticeSettings()
 
@@ -19,14 +17,6 @@ struct PracticeSettings: Equatable, Codable {
     mutating func normalize() {
         if naming.style == .letters, case .instrument = naming.relationship {
             naming.relationship = .standard
-        }
-    }
-
-    /// The anchor for Hear → Guess: Do in standard naming, the declared reference otherwise.
-    var referenceNatural: NaturalName {
-        switch naming.relationship {
-        case .standard: return .c
-        case let .instrument(reference, _): return reference
         }
     }
 }

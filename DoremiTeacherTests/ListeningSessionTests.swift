@@ -54,30 +54,22 @@ final class ListeningSessionTests: XCTestCase {
         session.question.choices.first { $0 != session.question.target }!
     }
 
-    func testPlaybackIsAnchorGapTarget() {
+    func testPlaybackIsJustTheTarget() {
         session.play()
         let segments = player.played[0]
-        XCTAssertEqual(segments.count, 3)
-        XCTAssertEqual(segments[0].frequencyHz!, 523.25, accuracy: 0.01, "standard anchor is Do = C5")
-        XCTAssertNil(segments[1].frequencyHz)
-        XCTAssertEqual(segments[2].frequencyHz!, session.question.targetFrequency)
-        XCTAssertEqual(segments[2].duration, ListeningSession.targetDuration)
+        XCTAssertEqual(segments.count, 1)
+        XCTAssertEqual(segments[0].frequencyHz!, session.question.targetFrequency)
+        XCTAssertEqual(segments[0].duration, ListeningSession.targetDuration)
     }
 
-    func testReferenceOffPlaysOnlyTarget() {
-        var s = PracticeSettings.default
-        s.referenceSoundOn = false
-        makeSession(s)
-        session.play()
-        XCTAssertEqual(player.played[0].count, 1)
-    }
-
-    func testInstrumentAnchorIsTheReferenceNote() {
+    func testInstrumentNamingTransposesTheTarget() {
         var s = PracticeSettings.default
         s.naming = sazNaming
         makeSession(s)
         session.play()
-        XCTAssertEqual(player.played[0][0].frequencyHz!, 659.26, accuracy: 0.01, "Re sounds E5")
+        let written = session.question.target
+        XCTAssertEqual(player.played[0][0].frequencyHz!, sazNaming.frequency(forWritten: written))
+        XCTAssertNotEqual(player.played[0][0].frequencyHz!, NoteNaming().frequency(forWritten: written))
     }
 
     func testHappyPathRecordsExactlyOneCorrectResult() {

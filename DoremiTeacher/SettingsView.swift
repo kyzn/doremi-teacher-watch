@@ -43,11 +43,6 @@ struct SettingsView: View {
                         SettingRow(title: "Accidentals", value: settings.settings.naming.accidentals == .sharps ? Text(verbatim: "♯") : Text(verbatim: "♭"))
                     }
                 }
-
-                Toggle(isOn: $settings.settings.referenceSoundOn) {
-                    Text("Reference sound")
-                }
-                .padding(.horizontal, 8)
             }
             .lineLimit(1)
             .minimumScaleFactor(0.7)

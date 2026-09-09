@@ -6,7 +6,6 @@
 "Replay" = "Replay";
 "Playing…" = "Playing…";
 "Retry" = "Retry";
-"%@, then ?" = "%@, then ?";
 "Correct" = "Correct";
 "Not quite" = "Not quite";
 "sounds %@" = "sounds %@";
@@ -24,7 +23,6 @@
 "Accidentals" = "Accidentals";
 "Prefer sharps" = "Prefer sharps";
 "Prefer flats" = "Prefer flats";
-"Reference sound" = "Reference sound";
 "Standard: Do sounds C. My instrument: you say which note one name sounds like, and every name shifts with it." = "Standard: Do sounds C. My instrument: you say which note one name sounds like, and every name shifts with it.";
 "My %@ sounds like" = "My %@ sounds like";
 "Reference name" = "Reference name";

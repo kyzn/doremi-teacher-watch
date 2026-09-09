@@ -6,7 +6,6 @@
 "Replay" = "Tekrar çal";
 "Playing…" = "Çalıyor…";
 "Retry" = "Yeniden dene";
-"%@, then ?" = "%@, sonra ?";
 "Correct" = "Doğru";
 "Not quite" = "Olmadı";
 "sounds %@" = "sesi %@";
@@ -24,7 +23,6 @@
 "Accidentals" = "Arızalar";
 "Prefer sharps" = "Diyez tercih et";
 "Prefer flats" = "Bemol tercih et";
-"Reference sound" = "Referans sesi";
 "Standard: Do sounds C. My instrument: you say which note one name sounds like, and every name shifts with it." = "Standart: Do, C sesidir. Benim sazım: bir notanın hangi sese denk geldiğini söylersin, tüm adlar onunla birlikte kayar.";
 "My %@ sounds like" = "Benim %@ sesim";
 "Reference name" = "Referans nota";

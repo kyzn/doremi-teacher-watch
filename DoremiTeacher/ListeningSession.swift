@@ -14,8 +14,6 @@ final class ListeningSession: ObservableObject {
         case feedback(chosen: PitchClass)
     }
 
-    static let referenceDuration: TimeInterval = 0.55
-    static let gapDuration: TimeInterval = 0.35
     static let targetDuration: TimeInterval = 0.85
 
     @Published private(set) var question: ListeningQuestion
@@ -48,15 +46,9 @@ final class ListeningSession: ObservableObject {
         return nil
     }
 
-    /// Anchor, pause, target. Same timbre and length for every target so they carry no clue.
+    /// Just the target. Same timbre and length for every note so they carry no clue.
     var playbackSegments: [ToneSegment] {
-        var segments: [ToneSegment] = []
-        if question.referenceSoundOn {
-            segments.append(.tone(question.referenceFrequency, Self.referenceDuration))
-            segments.append(.rest(Self.gapDuration))
-        }
-        segments.append(.tone(question.targetFrequency, Self.targetDuration))
-        return segments
+        [.tone(question.targetFrequency, Self.targetDuration)]
     }
 
     func play() {

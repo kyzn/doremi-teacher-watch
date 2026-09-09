@@ -13,6 +13,13 @@ release on purpose, not forgotten.
 
 # Decisions log
 
+- Reference sound removed entirely (9 September 2026): the anchor-then-target playback felt
+  like two unexplained sounds on the wrist. Hear → Guess plays only the hidden note. If a
+  learner needs an anchor later, add it back as an explicit "Hear Do" button, not automatic
+  playback.
+- Instrument naming (My instrument) is available only with Do Re Mi names; A B C always means
+  concert pitch.
+
 - Playback register: **C5–B5**. On the wrist, octave 4 was barely audible at full volume and octave 6 cracked from about F6. Decided 9 September 2026.
 - Note names: user-selectable letters or syllables, default Standard naming. In Japanese the
   syllable UI shows katakana (ドレミファソラシ).
