@@ -2,7 +2,7 @@
 import SwiftUI
 
 /// Debug-only wrist experiment for step 1: which register is audible on the watch speaker.
-/// Naturals from C4 to B5, each a 700 ms sine. Removed from Release builds by the `#if`.
+/// Naturals from C4 to B6, each a 700 ms sine. Removed from Release builds by the `#if`.
 struct ToneCheckView: View {
     @EnvironmentObject private var tonePlayer: TonePlayer
 
@@ -15,7 +15,7 @@ struct ToneCheckView: View {
 
     private let notes: [Note] = {
         let naturals: [(String, Double)] = [("C", 0), ("D", 2), ("E", 4), ("F", 5), ("G", 7), ("A", 9), ("B", 11)]
-        return [4, 5].flatMap { octave in
+        return [4, 5, 6].flatMap { octave in
             naturals.map { Note(name: "\($0.0)\(octave)", midi: 12 * Double(octave + 1) + $0.1) }
         }
     }()
