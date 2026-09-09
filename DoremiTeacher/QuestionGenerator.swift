@@ -5,6 +5,7 @@ import Foundation
 struct ListeningQuestion: Identifiable, Equatable {
     let id: UUID
     let naming: NoteNaming
+    let noteSet: NoteSet
     let referenceSoundOn: Bool
     let reference: NaturalName
     /// Written pitch the learner must name.
@@ -47,6 +48,7 @@ struct QuestionGenerator<RNG: RandomNumberGenerator> {
         return ListeningQuestion(
             id: UUID(),
             naming: settings.naming,
+            noteSet: settings.noteSet,
             referenceSoundOn: settings.referenceSoundOn,
             reference: settings.referenceNatural,
             target: target,
