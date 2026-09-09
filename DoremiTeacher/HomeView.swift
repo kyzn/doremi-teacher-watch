@@ -1,6 +1,7 @@
 import SwiftUI
 
-/// Three rows for v1. Note → Hum is deferred (see TODO.md), so it has no row yet.
+/// Three rows for v1. With a single practice mode the game row just says Start; Note → Hum is
+/// deferred (see TODO.md), so there is no second row yet.
 struct HomeView: View {
     @EnvironmentObject private var tonePlayer: TonePlayer
     @EnvironmentObject private var settings: SettingsStore
@@ -12,7 +13,7 @@ struct HomeView: View {
             ScrollView {
                 VStack(spacing: 8) {
                     NavigationLink(destination: ListeningView(player: tonePlayer, settings: settings, stats: stats)) {
-                        Text("Hear → Guess")
+                        Text("Start")
                             .frame(maxWidth: .infinity)
                     }
                     .tint(.accentColor)

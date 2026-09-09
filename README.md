@@ -25,7 +25,7 @@ Bubble Level.
 DoremiTeacher.xcodeproj
 DoremiTeacher/               watch app target
   DoremiTeacherApp.swift     @main scene, stops audio when the scene leaves .active
-  HomeView.swift             menu: Hear → Guess, Stats, Settings
+  HomeView.swift             menu: Start, Stats, Settings
   PitchMath.swift            Hz ↔ cents ↔ MIDI around A4 = 440 Hz, unit tested
   ToneSynth.swift            pure PCM rendering of tone/rest segments, unit tested
   TonePlayer.swift           AVAudioEngine playback of one finite buffer per sound
