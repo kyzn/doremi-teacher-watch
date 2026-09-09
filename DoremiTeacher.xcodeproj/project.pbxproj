@@ -1,0 +1,509 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D00000010000000000000015 /* Doremi Teacher Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D00000010000000000000005 /* Doremi Teacher Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D00000010000000000000016 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0000001000000000000000A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D00000010000000000000006;
+			remoteInfo = DoremiTeacher;
+		};
+		D00000010000000000000029 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D0000001000000000000000A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D00000010000000000000006;
+			remoteInfo = DoremiTeacher;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D00000010000000000000014 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				D00000010000000000000015 /* Doremi Teacher Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D00000010000000000000005 /* Doremi Teacher Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Doremi Teacher Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D00000010000000000000011 /* Doremi Teacher Watch Special.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Doremi Teacher Watch Special.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D00000010000000000000022 /* DoremiTeacherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DoremiTeacherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D00000010000000000000001 /* DoremiTeacher */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DoremiTeacher;
+			sourceTree = "<group>";
+		};
+		D00000010000000000000012 /* DoremiTeacherContainer */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DoremiTeacherContainer;
+			sourceTree = "<group>";
+		};
+		D00000010000000000000020 /* DoremiTeacherTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = DoremiTeacherTests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D00000010000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000010000000000000027 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D00000010000000000000003 = {
+			isa = PBXGroup;
+			children = (
+				D00000010000000000000001 /* DoremiTeacher */,
+				D00000010000000000000012 /* DoremiTeacherContainer */,
+				D00000010000000000000020 /* DoremiTeacherTests */,
+				D00000010000000000000004 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D00000010000000000000004 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D00000010000000000000005 /* Doremi Teacher Watch App.app */,
+				D00000010000000000000011 /* Doremi Teacher Watch Special.app */,
+				D00000010000000000000022 /* DoremiTeacherTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D00000010000000000000006 /* DoremiTeacher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D00000010000000000000007 /* Build configuration list for PBXNativeTarget "DoremiTeacher" */;
+			buildPhases = (
+				D00000010000000000000008 /* Sources */,
+				D00000010000000000000002 /* Frameworks */,
+				D00000010000000000000009 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				D00000010000000000000001 /* DoremiTeacher */,
+			);
+			name = DoremiTeacher;
+			productName = DoremiTeacher;
+			productReference = D00000010000000000000005 /* Doremi Teacher Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D00000010000000000000010 /* DoremiTeacherContainer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D00000010000000000000018 /* Build configuration list for PBXNativeTarget "DoremiTeacherContainer" */;
+			buildPhases = (
+				D00000010000000000000013 /* Resources */,
+				D00000010000000000000014 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D00000010000000000000017 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D00000010000000000000012 /* DoremiTeacherContainer */,
+			);
+			name = DoremiTeacherContainer;
+			productName = DoremiTeacherContainer;
+			productReference = D00000010000000000000011 /* Doremi Teacher Watch Special.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		D00000010000000000000021 /* DoremiTeacherTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D00000010000000000000023 /* Build configuration list for PBXNativeTarget "DoremiTeacherTests" */;
+			buildPhases = (
+				D00000010000000000000026 /* Sources */,
+				D00000010000000000000027 /* Frameworks */,
+				D00000010000000000000028 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D0000001000000000000002A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D00000010000000000000020 /* DoremiTeacherTests */,
+			);
+			name = DoremiTeacherTests;
+			productName = DoremiTeacherTests;
+			productReference = D00000010000000000000022 /* DoremiTeacherTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D0000001000000000000000A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					D00000010000000000000006 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					D00000010000000000000010 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					D00000010000000000000021 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = D00000010000000000000006;
+					};
+				};
+			};
+			buildConfigurationList = D0000001000000000000000B /* Build configuration list for PBXProject "DoremiTeacher" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				ja,
+				tr,
+				Base,
+			);
+			mainGroup = D00000010000000000000003;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D00000010000000000000004 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D00000010000000000000010 /* DoremiTeacherContainer */,
+				D00000010000000000000006 /* DoremiTeacher */,
+				D00000010000000000000021 /* DoremiTeacherTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D00000010000000000000009 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000010000000000000013 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000010000000000000028 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D00000010000000000000008 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D00000010000000000000026 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D00000010000000000000017 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D00000010000000000000006 /* DoremiTeacher */;
+			targetProxy = D00000010000000000000016 /* PBXContainerItemProxy */;
+		};
+		D0000001000000000000002A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D00000010000000000000006 /* DoremiTeacher */;
+			targetProxy = D00000010000000000000029 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D0000001000000000000000C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Debug;
+		};
+		D0000001000000000000000D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 8.0;
+			};
+			name = Release;
+		};
+		D0000001000000000000000E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"ARCHS[sdk=watchos*]" = (
+					"$(ARCHS_STANDARD)",
+					armv7k,
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CBH6LZCN92;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Doremi Teacher";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hoshinosoftware.doremiteacher.watchkitapp;
+				PRODUCT_NAME = "Doremi Teacher Watch App";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Debug;
+		};
+		D0000001000000000000000F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"ARCHS[sdk=watchos*]" = (
+					"$(ARCHS_STANDARD)",
+					armv7k,
+				);
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CBH6LZCN92;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Doremi Teacher";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hoshinosoftware.doremiteacher.watchkitapp;
+				PRODUCT_NAME = "Doremi Teacher Watch App";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+			};
+			name = Release;
+		};
+		D00000010000000000000019 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CBH6LZCN92;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Doremi Teacher";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hoshinosoftware.doremiteacher;
+				PRODUCT_NAME = "Doremi Teacher Watch Special";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		D0000001000000000000001A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CBH6LZCN92;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Doremi Teacher";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hoshinosoftware.doremiteacher;
+				PRODUCT_NAME = "Doremi Teacher Watch Special";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		D00000010000000000000024 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CBH6LZCN92;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hoshinosoftware.doremiteacher.watchkitapp.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Doremi Teacher Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Doremi Teacher Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		D00000010000000000000025 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CBH6LZCN92;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hoshinosoftware.doremiteacher.watchkitapp.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Doremi Teacher Watch App.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Doremi Teacher Watch App";
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D0000001000000000000000B /* Build configuration list for PBXProject "DoremiTeacher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0000001000000000000000C /* Debug */,
+				D0000001000000000000000D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D00000010000000000000007 /* Build configuration list for PBXNativeTarget "DoremiTeacher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0000001000000000000000E /* Debug */,
+				D0000001000000000000000F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D00000010000000000000018 /* Build configuration list for PBXNativeTarget "DoremiTeacherContainer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D00000010000000000000019 /* Debug */,
+				D0000001000000000000001A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D00000010000000000000023 /* Build configuration list for PBXNativeTarget "DoremiTeacherTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D00000010000000000000024 /* Debug */,
+				D00000010000000000000025 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D0000001000000000000000A /* Project object */;
+}
