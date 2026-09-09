@@ -14,11 +14,15 @@ final class FakeTonePlayer: TonePlaying {
         pending = completion
     }
 
-    func stop() {
-        stopCount += 1
+    func cancel() {
         let callback = pending
         pending = nil
         callback?(.cancelled)
+    }
+
+    func stop() {
+        stopCount += 1
+        cancel()
     }
 
     func finish() { let c = pending; pending = nil; c?(.finished) }

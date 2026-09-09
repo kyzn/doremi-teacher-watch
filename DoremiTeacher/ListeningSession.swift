@@ -99,7 +99,7 @@ final class ListeningSession: ObservableObject {
     }
 
     func next() {
-        player.stop()
+        player.cancel()
         isPlaying = false
         question = nextQuestion(question.target)
         phase = .awaitingPlayback

@@ -1,11 +1,12 @@
 import AVFoundation
 import Combine
 import Foundation
+import os
 
 enum PlaybackOutcome: Equatable {
     /// The whole buffer reached the output.
     case finished
-    /// Stopped by `stop()`, a scene change, or an audio interruption before it finished.
+    /// Stopped by `cancel()`/`stop()`, a scene change, or an audio interruption before it finished.
     case cancelled
     case failed(String)
 }
@@ -14,21 +15,32 @@ enum PlaybackOutcome: Equatable {
 @MainActor
 protocol TonePlaying: AnyObject {
     func play(_ segments: [ToneSegment], completion: @escaping (PlaybackOutcome) -> Void)
+    /// Cancels the current sound but keeps the audio path warm. Use between rounds.
+    func cancel()
+    /// Cancels and releases the audio session. Use when leaving a screen or going inactive.
     func stop()
 }
 
-/// Plays one finite PCM buffer through `AVAudioEngine`. Same shape as Morse Teacher's
-/// player: engine and node retained for life, session kept active between sounds, and a
-/// generation counter so a stale completion can never report on a later sound.
+/// Plays one finite PCM buffer through `AVAudioEngine`.
+///
+/// The engine and node are retained for life and the session stays active between sounds,
+/// because tearing the session down and straight back up left the engine reporting
+/// `isRunning` while rendering nothing: the buffer's completion then arrived only when the
+/// system killed the session 10–15 s later. A watchdog guards against any repeat of that.
 @MainActor
 final class TonePlayer: ObservableObject, TonePlaying {
     @Published private(set) var isPlaying = false
+
+    private static let logger = Logger(subsystem: "com.hoshinosoftware.doremiteacher", category: "audio")
+    /// Grace period after the buffer should have ended before the watchdog intervenes.
+    static let watchdogGrace: TimeInterval = 1.5
 
     private let engine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
     private let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
     private var generation: UInt64 = 0
     private var completion: ((PlaybackOutcome) -> Void)?
+    private var watchdog: DispatchWorkItem?
     private var observers: [NSObjectProtocol] = []
 
     init() {
@@ -43,6 +55,7 @@ final class TonePlayer: ObservableObject, TonePlaying {
         ) { [weak self] notification in
             guard let type = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
                   type == AVAudioSession.InterruptionType.began.rawValue else { return }
+            Self.logger.notice("audio interruption began")
             MainActor.assumeIsolated { self?.stop() }
         })
         observers.append(center.addObserver(
@@ -50,7 +63,14 @@ final class TonePlayer: ObservableObject, TonePlaying {
             object: engine,
             queue: .main
         ) { [weak self] _ in
-            MainActor.assumeIsolated { self?.stop() }
+            // Route or format changed; the engine has stopped. Cancel the current sound and
+            // stop the engine explicitly so the next play restarts it instead of trusting
+            // a stale `isRunning`.
+            Self.logger.notice("engine configuration change")
+            MainActor.assumeIsolated {
+                self?.cancelCurrent()
+                self?.engine.stop()
+            }
         })
     }
 
@@ -59,6 +79,10 @@ final class TonePlayer: ObservableObject, TonePlaying {
     }
 
     func play(_ segments: [ToneSegment], completion: @escaping (PlaybackOutcome) -> Void) {
+        play(segments, completion: completion, isRetry: false)
+    }
+
+    private func play(_ segments: [ToneSegment], completion: @escaping (PlaybackOutcome) -> Void, isRetry: Bool) {
         cancelCurrent()
         generation &+= 1
         let currentGeneration = generation
@@ -75,30 +99,57 @@ final class TonePlayer: ObservableObject, TonePlaying {
             try session.setActive(true)
             if !engine.isRunning {
                 try engine.start()
+                Self.logger.debug("engine started")
             }
         } catch {
+            Self.logger.error("audio setup failed: \(error.localizedDescription, privacy: .public)")
             finish(.failed("Sound is unavailable. Check volume and Silent Mode."), generation: currentGeneration)
             return
         }
 
         isPlaying = true
+        let expected = ToneSynth.totalDuration(segments)
         playerNode.scheduleBuffer(buffer, at: nil, options: [], completionCallbackType: .dataPlayedBack) { [weak self] _ in
             Task { @MainActor in
                 self?.finish(.finished, generation: currentGeneration)
             }
         }
         playerNode.play()
+
+        // If the completion never comes, the engine was not really rendering. Restart it and
+        // replay once; report a failure if that does not help either.
+        let item = DispatchWorkItem { [weak self] in
+            guard let self, self.generation == currentGeneration, self.isPlaying else { return }
+            Self.logger.error("playback stalled (retry: \(isRetry)); restarting engine")
+            self.playerNode.stop()
+            self.engine.stop()
+            self.isPlaying = false
+            if isRetry {
+                self.finish(.failed("Sound stalled. Tap to try again."), generation: currentGeneration)
+            } else {
+                let pending = self.completion
+                self.completion = nil
+                self.play(segments, completion: pending ?? { _ in }, isRetry: true)
+            }
+        }
+        watchdog = item
+        DispatchQueue.main.asyncAfter(deadline: .now() + expected + Self.watchdogGrace, execute: item)
     }
 
-    /// Stops any playback and releases the audio session. Call when leaving a screen or
-    /// when the app goes inactive. Safe to call when idle.
+    func cancel() {
+        cancelCurrent()
+    }
+
     func stop() {
         cancelCurrent()
+        engine.stop()
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
     }
 
     private func cancelCurrent() {
         generation &+= 1
+        watchdog?.cancel()
+        watchdog = nil
         let pending = completion
         completion = nil
         if isPlaying {
@@ -110,6 +161,8 @@ final class TonePlayer: ObservableObject, TonePlaying {
 
     private func finish(_ outcome: PlaybackOutcome, generation expected: UInt64) {
         guard generation == expected else { return }
+        watchdog?.cancel()
+        watchdog = nil
         let pending = completion
         completion = nil
         isPlaying = false
