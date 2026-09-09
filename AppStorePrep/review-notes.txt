@@ -1,0 +1,17 @@
+This is a standalone watchOS app. There is no iPhone app, no account, no
+microphone use, and no network access of any kind.
+
+How to use it:
+- Start: a note plays automatically. Tap one of the four names to answer.
+  Replay is unlimited before answering. Next plays a new note.
+- Settings: choose Do Re Mi or A B C names; choose Standard pitch or
+  "My instrument" (e.g. a saz whose Re sounds like E, which shifts every name);
+  choose seven notes or notes with sharps/flats.
+- Stats: swipe between Total, Seven notes, and With sharps/flats.
+- The Digital Crown adjusts volume on the practice screens.
+
+Sound plays through the watch speaker or connected Bluetooth headphones. On the
+watchOS Simulator sound plays through the Mac.
+
+Privacy: no data is collected or transmitted. Settings and correct/wrong counts
+are stored only on the watch.
