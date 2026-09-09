@@ -34,15 +34,6 @@ struct SettingsView: View {
                 )) {
                     SettingRow(title: "Notes to practice", value: settings.settings.noteSet == .seven ? Text("Seven notes") : Text("With sharps/flats"))
                 }
-
-                if settings.settings.noteSet == .twelve {
-                    NavigationLink(destination: OptionPicker(
-                        selection: $settings.settings.naming.accidentals,
-                        options: [(.sharps, Text("Prefer sharps")), (.flats, Text("Prefer flats"))]
-                    )) {
-                        SettingRow(title: "Accidentals", value: settings.settings.naming.accidentals == .sharps ? Text(verbatim: "♯") : Text(verbatim: "♭"))
-                    }
-                }
             }
             .lineLimit(1)
             .minimumScaleFactor(0.7)

@@ -58,20 +58,19 @@ final class NoteNamingTests: XCTestCase {
         XCTAssertEqual(sounds, [.d, .e, .fSharp, .g, .a, .b, .cSharp])
     }
 
-    func testAccidentalSpelling() {
-        var sharps = NoteNaming()
-        sharps.accidentals = .sharps
-        var flats = sharps
-        flats.accidentals = .flats
-        XCTAssertEqual(sharps.label(forWritten: .cSharp), "Do♯")
-        XCTAssertEqual(flats.label(forWritten: .cSharp), "Re♭")
-        XCTAssertEqual(sharps.alternateLabel(forWritten: .cSharp), "Re♭")
-        XCTAssertNil(sharps.alternateLabel(forWritten: .d))
-        var letterFlats = flats
-        letterFlats.style = .letters
-        XCTAssertEqual(letterFlats.label(forWritten: PitchClass(centsAboveC: 1000)), "B♭")
-        XCTAssertEqual(sharps.spokenLabel(forWritten: .fSharp), "Fa sharp")
-        XCTAssertEqual(letterFlats.spokenLabel(forWritten: .fSharp), "G flat")
+    func testConventionalAccidentalSpelling() {
+        let letters = NoteNaming(style: .letters)
+        let altered = [100, 300, 600, 800, 1000].map { PitchClass(centsAboveC: $0) }
+        XCTAssertEqual(altered.map { letters.label(forWritten: $0) }, ["C♯", "E♭", "F♯", "G♯", "B♭"])
+        XCTAssertEqual(altered.map { letters.alternateLabel(forWritten: $0)! }, ["D♭", "D♯", "G♭", "A♭", "A♯"])
+        let syllables = NoteNaming()
+        XCTAssertEqual(altered.map { syllables.label(forWritten: $0) }, ["Do♯", "Mi♭", "Fa♯", "Sol♯", "Si♭"])
+        XCTAssertNil(syllables.alternateLabel(forWritten: .d))
+        XCTAssertEqual(syllables.spokenLabel(forWritten: .fSharp), "Fa sharp")
+        XCTAssertEqual(letters.spokenLabel(forWritten: PitchClass(centsAboveC: 300)), "E flat")
+        // Concert labels under a transposition use the same convention.
+        XCTAssertEqual(sazNaming.concertLabel(forWritten: .e), "F♯")
+        XCTAssertEqual(sazNaming.concertLabel(forWritten: .a), "B")
     }
 
     func testTwelveNoteSetHasOneSpellingPerSound() {

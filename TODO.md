@@ -19,6 +19,8 @@ release on purpose, not forgotten.
   playback.
 - Instrument naming (My instrument) is available only with Do Re Mi names; A B C always means
   concert pitch.
+- No sharps/flats preference. Altered pitches use the conventional songbook spelling C♯, E♭,
+  F♯, G♯, B♭; feedback can show the other name.
 
 - Playback register: **C5–B5**. On the wrist, octave 4 was barely audible at full volume and octave 6 cracked from about F6. Decided 9 September 2026.
 - Note names: user-selectable letters or syllables, default Standard naming. In Japanese the

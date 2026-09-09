@@ -29,4 +29,4 @@ extension PitchClass {
 }
 
 /// The user's saz profile: Re sounds concert E.
-let sazNaming = NoteNaming(style: .syllables, relationship: .instrument(reference: .d, soundsLike: .e), accidentals: .sharps)
+let sazNaming = NoteNaming(style: .syllables, relationship: .instrument(reference: .d, soundsLike: .e))

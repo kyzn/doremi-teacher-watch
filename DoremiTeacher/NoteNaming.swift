@@ -15,11 +15,6 @@ enum NameStyle: String, Codable, CaseIterable {
     case syllables
 }
 
-enum AccidentalPreference: String, Codable, CaseIterable {
-    case sharps
-    case flats
-}
-
 /// Script used for syllables. Japanese learners read ドレミ; everyone else reads Do Re Mi.
 enum SyllableScript {
     case latin
@@ -36,7 +31,16 @@ enum SyllableScript {
 struct NoteNaming: Equatable, Codable {
     var style: NameStyle = .syllables
     var relationship: NamingRelationship = .standard
-    var accidentals: AccidentalPreference = .sharps
+
+    /// Conventional spelling for the five altered pitches, the way songbooks usually write
+    /// them without a key: C♯, E♭, F♯, G♯, B♭. `true` means spell from the natural below with
+    /// a sharp; `false` from the natural above with a flat.
+    static func spellsWithSharp(_ pitch: PitchClass) -> Bool {
+        switch pitch.centsAboveC {
+        case 300, 1000: return false   // E♭, B♭
+        default: return true           // C♯, F♯, G♯
+        }
+    }
 
     /// Cents added to a written pitch to reach its concert sound.
     var transpositionCents: Int {
@@ -87,22 +91,25 @@ struct NoteNaming: Equatable, Codable {
         }
     }
 
-    /// Both spellings of an altered pitch, for feedback text such as "also called Mi♭".
+    /// The other spelling of an altered pitch, for feedback text such as "also called Re♭".
     func alternateLabel(forWritten written: PitchClass, script: SyllableScript = .latin) -> String? {
         guard NaturalName.natural(at: written) == nil else { return nil }
-        var flipped = self
-        flipped.accidentals = accidentals == .sharps ? .flats : .sharps
-        return flipped.label(forWritten: written, script: script)
+        return spelled(written, useSharp: !Self.spellsWithSharp(written)) { natural in
+            switch style {
+            case .letters: return natural.letter
+            case .syllables: return script == .katakana ? natural.katakana : natural.syllable
+            }
+        }
     }
 
-    private func spelled(_ pitch: PitchClass, sharp: String = "♯", flat: String = "♭", name: (NaturalName) -> String) -> String {
+    private func spelled(_ pitch: PitchClass, sharp: String = "♯", flat: String = "♭", useSharp: Bool? = nil, name: (NaturalName) -> String) -> String {
         if let natural = NaturalName.natural(at: pitch) {
             return name(natural)
         }
-        switch accidentals {
-        case .sharps: return name(NaturalName.below(pitch)) + sharp
-        case .flats: return name(NaturalName.above(pitch)) + flat
+        if useSharp ?? Self.spellsWithSharp(pitch) {
+            return name(NaturalName.below(pitch)) + sharp
         }
+        return name(NaturalName.above(pitch)) + flat
     }
 
     // MARK: Settings preview
