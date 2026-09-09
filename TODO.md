@@ -13,7 +13,7 @@ release on purpose, not forgotten.
 
 # Decisions log
 
-- Playback register: try C4–B4 first; if the watch speaker is too weak there, use C5–B5.
+- Playback register: **C5–B5**. On the wrist, octave 4 was barely audible at full volume and octave 6 cracked from about F6. Decided 9 September 2026.
 - Note names: user-selectable letters or syllables, default Standard naming. In Japanese the
   syllable UI shows katakana (ドレミファソラシ).
 - Names: EN "Doremi Teacher Watch Special", JA "ドレミ先生 ウォッチ", TR "Doremi Hocası Kolunda";
