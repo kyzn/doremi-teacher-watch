@@ -5,13 +5,16 @@ struct ToneSegment: Equatable {
     /// Nil means silence.
     let frequencyHz: Double?
     let duration: TimeInterval
+    /// Peak level, 0…1. Defaults to the register's loudness compensation.
+    let amplitude: Float
 
-    static func tone(_ frequencyHz: Double, _ duration: TimeInterval) -> ToneSegment {
-        ToneSegment(frequencyHz: frequencyHz, duration: duration)
+    static func tone(_ frequencyHz: Double, _ duration: TimeInterval, amplitude: Float? = nil) -> ToneSegment {
+        ToneSegment(frequencyHz: frequencyHz, duration: duration,
+                    amplitude: amplitude ?? PlaybackRegister.amplitude(forFrequency: frequencyHz))
     }
 
     static func rest(_ duration: TimeInterval) -> ToneSegment {
-        ToneSegment(frequencyHz: nil, duration: duration)
+        ToneSegment(frequencyHz: nil, duration: duration, amplitude: 0)
     }
 }
 
@@ -25,7 +28,7 @@ enum ToneSynth {
         segments.reduce(0) { $0 + $1.duration } + trailingSilenceDuration
     }
 
-    static func samples(for segments: [ToneSegment], sampleRate: Double, amplitude: Float = 0.8) -> [Float] {
+    static func samples(for segments: [ToneSegment], sampleRate: Double) -> [Float] {
         var output: [Float] = []
         output.reserveCapacity(Int(totalDuration(segments) * sampleRate) + 1)
         let rampFrames = max(1, Int(rampDuration * sampleRate))
@@ -46,7 +49,7 @@ enum ToneSynth {
                 } else {
                     envelope = 1
                 }
-                output.append(Float(sin(phaseStep * Double(frame))) * amplitude * envelope)
+                output.append(Float(sin(phaseStep * Double(frame))) * segment.amplitude * envelope)
             }
         }
         output.append(contentsOf: repeatElement(0, count: Int(trailingSilenceDuration * sampleRate)))

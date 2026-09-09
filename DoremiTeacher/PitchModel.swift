@@ -75,4 +75,12 @@ enum PlaybackRegister {
     static func frequency(for concert: PitchClass) -> Double {
         PitchMath.frequency(midi: baseMidi + Double(concert.centsAboveC) / 100)
     }
+
+    /// The watch speaker gets louder with frequency across this octave, so the low end is
+    /// pushed harder and the top end pulled back to even out perceived loudness.
+    static func amplitude(forFrequency hz: Double) -> Float {
+        let low = 523.25, high = 987.77
+        let t = min(max((hz - low) / (high - low), 0), 1)
+        return Float(1.0 - 0.4 * t)
+    }
 }

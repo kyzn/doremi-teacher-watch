@@ -33,6 +33,15 @@ final class SettingsStoreTests: XCTestCase {
         XCTAssertEqual(reloaded.settings.referenceNatural, .d)
     }
 
+    func testLettersDropInstrumentNaming() {
+        let store = SettingsStore(defaults: defaults)
+        store.settings.naming = sazNaming
+        XCTAssertEqual(store.settings.naming.relationship, sazNaming.relationship)
+        store.settings.naming.style = .letters
+        XCTAssertEqual(store.settings.naming.relationship, .standard)
+        XCTAssertEqual(SettingsStore(defaults: defaults).settings.naming.relationship, .standard, "normalized value is what gets saved")
+    }
+
     func testCorruptOrNewerDataFallsBackToDefaults() {
         defaults.set(Data("nonsense".utf8), forKey: SettingsStore.defaultsKey)
         XCTAssertEqual(SettingsStore(defaults: defaults).settings, .default)

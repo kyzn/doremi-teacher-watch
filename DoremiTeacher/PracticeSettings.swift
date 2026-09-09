@@ -14,6 +14,14 @@ struct PracticeSettings: Equatable, Codable {
 
     static let `default` = PracticeSettings()
 
+    /// Instrument naming is a syllable feature: letters always mean concert pitches. Called
+    /// whenever settings change so a switch to letters drops back to standard naming.
+    mutating func normalize() {
+        if naming.style == .letters, case .instrument = naming.relationship {
+            naming.relationship = .standard
+        }
+    }
+
     /// The anchor for Hear → Guess: Do in standard naming, the declared reference otherwise.
     var referenceNatural: NaturalName {
         switch naming.relationship {
@@ -28,7 +36,15 @@ final class SettingsStore: ObservableObject {
     static let defaultsKey = "doremi.settings.snapshot"
 
     @Published var settings: PracticeSettings {
-        didSet { save() }
+        didSet {
+            var normalized = settings
+            normalized.normalize()
+            if normalized != settings {
+                settings = normalized   // re-enters didSet once, then matches
+                return
+            }
+            save()
+        }
     }
 
     private let defaults: UserDefaults

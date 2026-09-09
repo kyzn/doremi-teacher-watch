@@ -15,8 +15,11 @@ struct SettingsView: View {
                     SettingRow(title: "Note names", value: settings.settings.naming.style == .letters ? Text(verbatim: "A B C") : syllableSample)
                 }
 
-                NavigationLink(destination: NamesFollowPicker()) {
-                    SettingRow(title: "Names follow", value: namesFollowValue)
+                // Instrument naming exists for syllables only; letters always mean concert pitch.
+                if settings.settings.naming.style == .syllables {
+                    NavigationLink(destination: NamesFollowPicker()) {
+                        SettingRow(title: "Names follow", value: namesFollowValue)
+                    }
                 }
 
                 if case .instrument = settings.settings.naming.relationship {

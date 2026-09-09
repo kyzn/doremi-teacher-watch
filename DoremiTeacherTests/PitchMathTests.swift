@@ -48,6 +48,15 @@ final class ToneSynthTests: XCTestCase {
         XCTAssertEqual(samples.count, 4_000 + 2_000 + 4_000 + Int(ToneSynth.trailingSilenceDuration * 8_000))
     }
 
+    func testLowNotesGetMoreGainThanHighNotes() {
+        let low = ToneSynth.samples(for: [.tone(523.25, 0.2)], sampleRate: 8_000).map(abs).max()!
+        let high = ToneSynth.samples(for: [.tone(987.77, 0.2)], sampleRate: 8_000).map(abs).max()!
+        XCTAssertEqual(low, 1.0, accuracy: 0.02)
+        XCTAssertEqual(high, 0.6, accuracy: 0.02)
+        XCTAssertEqual(PlaybackRegister.amplitude(forFrequency: 100), 1.0)
+        XCTAssertEqual(PlaybackRegister.amplitude(forFrequency: 5_000), 0.6, accuracy: 0.001)
+    }
+
     func testRestsAreSilentAndTonesRamp() {
         let samples = ToneSynth.samples(for: [.tone(440, 0.5), .rest(0.25)], sampleRate: 8_000)
         XCTAssertEqual(samples.first ?? 1, 0, accuracy: 0.001)
