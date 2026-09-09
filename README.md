@@ -32,15 +32,17 @@ DoremiTeacher/               watch app target
   VolumeView.swift           Digital Crown volume control
   FillButtonStyle.swift      buttons that share a screen's height (no scrolling in rounds)
   ToneCheckView.swift        DEBUG-only register audibility test, C4–B5
-  Assets.xcassets            AppIcon (1024, generated), AccentColor
+  Assets.xcassets            AppIcon (1024, from design/icons), AccentColor
   en/ja/tr.lproj             InfoPlist.strings + Localizable.strings
 DoremiTeacherContainer/      iOS container, no code at all
   Assets.xcassets            the same AppIcon, iOS idiom
 DoremiTeacherTests/          XCTest, runs on the watch simulator
-scripts/                     icon generator, watchOS 8 floor check
+scripts/                     watchOS 8 floor check, clock OCR
+design/icons/                icon source files and prompts
 ```
 
-Both icons come from `scripts/make-icon.swift` and must stay identical.
+Both catalogs carry the same 1024×1024 PNG from `design/icons/` (no alpha
+channel) and must stay identical.
 
 ## Build, test, run
 
