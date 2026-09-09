@@ -24,7 +24,7 @@ APP="$BUILD/Build/Products/Debug-watchsimulator/Doremi Teacher Watch App.app"
 
 # Apple Watch Series 11 (46mm), watchOS 26.5 → 416x496. App Store Connect
 # scales that down for every smaller watch.
-UDID=FFF4BF67-1E1A-455C-944A-D0C24AE4FA3A
+UDID="${UDID:-FFF4BF67-1E1A-455C-944A-D0C24AE4FA3A}"
 LOCALES=(en:en_US ja:ja_JP tr:tr_TR)
 # name:DEMO_SCREEN:extra env
 SHOTS=(
@@ -50,15 +50,18 @@ if [[ "${SKIP_BUILD:-}" != "1" ]]; then
 fi
 
 # The simulator adopts the Mac's clock at boot and never follows a later change,
-# so it comes up cold after the clock is pinned.
-if [[ -n "${PIN_TIME:-}" ]]; then
-  xcrun simctl shutdown "$UDID" 2>/dev/null || true
-  pin_clock
+# so it comes up cold after the clock is pinned. SKIP_BOOT=1 assumes the caller
+# already booted the device and installed the app (used for the 9:41 run).
+if [[ "${SKIP_BOOT:-}" != "1" ]]; then
+  if [[ -n "${PIN_TIME:-}" ]]; then
+    xcrun simctl shutdown "$UDID" 2>/dev/null || true
+    pin_clock
+  fi
+  xcrun simctl boot "$UDID" 2>/dev/null || true
+  xcrun simctl bootstatus "$UDID" -b >/dev/null
+  # Always install: SKIP_BUILD reuses a build, it does not mean the simulator has it.
+  xcrun simctl install "$UDID" "$APP"
 fi
-xcrun simctl boot "$UDID" 2>/dev/null || true
-xcrun simctl bootstatus "$UDID" -b >/dev/null
-# Always install: SKIP_BUILD reuses a build, it does not mean the simulator has it.
-xcrun simctl install "$UDID" "$APP"
 
 for loc in "${LOCALES[@]}"; do
   lang="${loc%%:*}"; locale="${loc##*:}"
@@ -71,7 +74,7 @@ for loc in "${LOCALES[@]}"; do
         ${extra:+SIMCTL_CHILD_$extra} \
         xcrun simctl launch --terminate-running-process "$UDID" "$BUNDLE" \
         -AppleLanguages "($lang)" -AppleLocale "$locale" >/dev/null
-    sleep 3
+    sleep "${SHOT_SLEEP:-3}"
     pin_clock
     xcrun simctl io "$UDID" screenshot --type png "$out/$name.png" 2>/dev/null
     echo "    $lang/$name.png"
