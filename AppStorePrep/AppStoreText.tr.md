@@ -4,25 +4,25 @@ Doremi Hocası Kolunda
 
 # Subtitle
 
-Bileğinde kulak eğitimi
+Bileğinizde kulak eğitimi
 
 # Promotional Text
 
-Notayı duy, adını söyle. Adlar standart sese göre de, kendi sazının akorduna göre de olabilir.
+Notayı dinleyip adını seçin. Do Re Mi ya da A B C, diyez ve bemollerle. Adlar sazınızın akorduna göre de ayarlanabilir.
 
 # Description
 
-Apple Watch'ınla kulağını eğit.
+Apple Watch’unuzda nota tanıma alıştırmaları yapın.
 
-Bir nota çalar, dört addan doğrusunu seçersin. Cevaplamadan önce istediğin kadar tekrar dinle. Her tur doğru cevapla ve tekrar dinleme düğmesiyle biter. Süre yok.
+Çalan notayı dinleyip dört seçenek arasından doğru adı seçin. Cevap vermeden önce istediğiniz kadar tekrar dinleyebilirsiniz. Cevabınızdan sonra doğru nota gösterilir; isterseniz tekrar dinleyebilirsiniz. Süre sınırı yok.
 
-Do Re Mi ya da A B C. Yedi doğal notayla çalış ya da diyez ve bemolleri ekle.
+Nota adlarını Do Re Mi veya A B C olarak görüntüleyebilir, yedi doğal notayla başlayıp diyez ve bemolleri de ekleyebilirsiniz.
 
-Sazın notaları kendine göre mi adlandırıyor? Senin Re'nin hangi sese denk geldiğini söyle, tüm adlar onunla kaysın. Bağlama çalanlar için yapıldı, her transpoze çalgı için işe yarar.
+“Benim sazım” ayarıyla nota adlarını çalgınızın akorduna göre ayarlayın. Örneğin Re olarak adlandırdığınız tel E sesi veriyorsa, Benim Re sesim ayarından E’yi seçin; uygulama diğer notaları da buna göre ayarlar. Bağlama çalanlar için yapıldı, her transpoze çalgı için işe yarar.
 
-Çalışırken Digital Crown sesi ayarlar. İstatistikler bugünün ve tüm zamanların doğruluğunu hem toplamda hem nota setine göre tutar.
+Alıştırma sırasında Digital Crown’u çevirerek sesi ayarlayabilirsiniz. İstatistik bölümünde bugünkü ve toplam doğru ve yanlış cevaplarınızı hem genel hem nota setine göre görebilirsiniz.
 
-Yalnızca saatte çalışır. iPhone uygulaması yok, hesap yok, reklam yok, takip yok, veri toplama yok.
+Yalnızca Apple Watch’ta çalışır; iPhone gerekmez. Hesap yok, reklam yok, takip yok, veri toplama yok.
 
 # What's New in This Version
 

@@ -21,11 +21,18 @@ struct FeedbackView: View {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Text(verbatim: question.label(for: question.target, script: script))
                     .font(.system(size: 34, weight: .bold, design: .rounded))
-                if let sounds = concertNote(for: question.target) {
-                    Text("sounds \(sounds)")
-                        .font(.footnote)
-                        .foregroundColor(.secondary)
+                VStack(alignment: .leading, spacing: 0) {
+                    // The other spelling of an altered note (D♭ for C♯), then the concert
+                    // sound under an instrument mapping.
+                    if let other = question.naming.alternateLabel(forWritten: question.target, script: script) {
+                        Text("also \(other)")
+                    }
+                    if let sounds = concertNote(for: question.target) {
+                        Text("sounds \(sounds)")
+                    }
                 }
+                .font(.footnote)
+                .foregroundColor(.secondary)
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(Text(verbatim: question.naming.spokenLabel(forWritten: question.target, script: script)))
