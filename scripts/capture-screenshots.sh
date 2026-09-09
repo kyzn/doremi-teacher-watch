@@ -27,12 +27,31 @@ APP="$BUILD/Build/Products/Debug-watchsimulator/Doremi Teacher Watch App.app"
 UDID="${UDID:-FFF4BF67-1E1A-455C-944A-D0C24AE4FA3A}"
 LOCALES=(en:en_US ja:ja_JP tr:tr_TR)
 # name:DEMO_SCREEN:extra env
-SHOTS=(
+# Per-locale shot lists, name:DEMO_SCREEN:extra env. English shows A B C and standard Do Re
+# Mi; Turkish shows Do Re Mi standard and with the saz instrument profile; Japanese shows
+# katakana Do Re Mi only.
+SHOTS_en=(
+  "1-home::"
+  "2-listen-abc:listening:DEMO_PROFILE=letters"
+  "3-listen-doremi:listening:"
+  "4-feedback:feedback-wrong:DEMO_PROFILE=letters"
+  "5-settings:settings:DEMO_PROFILE=letters"
+  "6-stats:stats:DEMO_STATS=14,3,120,41,9,2,80,30"
+)
+SHOTS_tr=(
   "1-home::"
   "2-listen:listening:"
   "3-feedback:feedback-wrong:DEMO_PROFILE=saz"
   "4-instrument:instrument:DEMO_PROFILE=saz"
-  "5-settings:settings:DEMO_PROFILE=saz-twelve"
+  "5-settings:settings:DEMO_PROFILE=saz"
+  "6-stats:stats:DEMO_STATS=14,3,120,41,9,2,80,30"
+)
+SHOTS_ja=(
+  "1-home::"
+  "2-listen:listening:"
+  "3-feedback:feedback-wrong:"
+  "4-listen-sharps:listening:DEMO_PROFILE=twelve"
+  "5-settings:settings:"
   "6-stats:stats:DEMO_STATS=14,3,120,41,9,2,80,30"
 )
 
@@ -68,7 +87,8 @@ for loc in "${LOCALES[@]}"; do
   out="$ROOT/AppStorePrep/screenshots/$lang"
   mkdir -p "$out"
 
-  for shot in "${SHOTS[@]}"; do
+  eval "shots=(\"\${SHOTS_${lang}[@]}\")"
+  for shot in "${shots[@]}"; do
     IFS=: read -r name screen extra <<< "$shot"
     env ${screen:+SIMCTL_CHILD_DEMO_SCREEN="$screen"} \
         ${extra:+SIMCTL_CHILD_$extra} \

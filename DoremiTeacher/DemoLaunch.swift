@@ -33,8 +33,8 @@ enum DemoLaunch: String {
         #endif
     }
 
-    /// `DEMO_PROFILE=saz` starts with the Re-sounds-E instrument profile; `DEMO_PROFILE=twelve`
-    /// selects the twelve-note set with standard naming. In-memory only.
+    /// `DEMO_PROFILE=letters` uses A B C names; `saz` the Re-sounds-E instrument profile;
+    /// `twelve` the twelve-note set; `saz-twelve` both. In-memory only.
     @MainActor
     static func demoSettings() -> SettingsStore? {
         #if DEBUG
@@ -43,6 +43,8 @@ enum DemoLaunch: String {
         suite.removePersistentDomain(forName: "doremi.demo.settings")
         let store = SettingsStore(defaults: suite)
         switch profile {
+        case "letters":
+            store.settings.naming.style = .letters
         case "saz":
             store.settings.naming.relationship = .instrument(reference: .d, soundsLike: PitchClass(centsAboveC: 400))
         case "twelve":
