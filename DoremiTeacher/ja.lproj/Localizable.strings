@@ -22,7 +22,6 @@
 "Accidentals" = "臨時記号";
 "Prefer sharps" = "♯を優先";
 "Prefer flats" = "♭を優先";
-"Standard: Do sounds C. My instrument: you say which note one name sounds like, and every name shifts with it." = "標準: ドは C の音。自分の楽器: ひとつの音名がどの実音かを指定すると、全部の音名がそれに合わせてずれます。";
 "My %@ sounds like" = "自分の%@の実音";
 "Reference name" = "基準の音名";
 "Lower" = "下げる";

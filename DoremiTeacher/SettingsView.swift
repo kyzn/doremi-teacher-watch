@@ -134,11 +134,6 @@ struct NamesFollowPicker: View {
                         settings.settings.naming.relationship = .instrument(reference: .d, soundsLike: PitchClass(centsAboveC: 400))
                     }
                 }
-                Text("Standard: Do sounds C. My instrument: you say which note one name sounds like, and every name shifts with it.")
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
-                    .multilineTextAlignment(.leading)
-                    .padding(.horizontal, 4)
             }
         }
     }
