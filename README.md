@@ -16,7 +16,7 @@ Bubble Level.
 | Bundle ID (container) | `com.hoshinosoftware.doremiteacher` |
 | Bundle ID (watch app) | `com.hoshinosoftware.doremiteacher.watchkitapp` |
 | Apple ID (App Store Connect) | 6810227571 |
-| Support / privacy | https://hoshinosoftware.com/doremiteacher/ · https://hoshinosoftware.com/doremiteacher/#privacy |
+| Support / privacy | per locale, see `AppStorePrep/urls.md` (https://hoshinosoftware.com/doremiteacher/) |
 | Version | 1.0 |
 | Deployment target | watchOS 8.0 (Series 3 and later), iOS 15.0 container |
 | Architectures | armv7k, arm64_32, arm64 |

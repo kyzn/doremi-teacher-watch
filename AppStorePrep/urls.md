@@ -1,10 +1,9 @@
 # App Store Connect URLs
 
-| Field | URL |
-|---|---|
-| Support URL | https://hoshinosoftware.com/doremiteacher/ |
-| Privacy Policy URL | https://hoshinosoftware.com/doremiteacher/#privacy |
-| Marketing URL | https://hoshinosoftware.com/doremiteacher/ |
+Per-locale, matching the localized listing.
 
-The page redirects to the visitor's language; `#privacy` is preserved by the redirect.
-Localized pages: `/doremiteacher/en`, `/doremiteacher/ja`, `/doremiteacher/tr`.
+| Locale | Support URL | Marketing URL | Privacy Policy URL |
+|---|---|---|---|
+| English | https://hoshinosoftware.com/doremiteacher/en/#support | https://hoshinosoftware.com/doremiteacher/en/ | https://hoshinosoftware.com/doremiteacher/en/#legal |
+| Japanese | https://hoshinosoftware.com/doremiteacher/ja/#support | https://hoshinosoftware.com/doremiteacher/ja/ | https://hoshinosoftware.com/doremiteacher/ja/#legal |
+| Turkish | https://hoshinosoftware.com/doremiteacher/tr/#support | https://hoshinosoftware.com/doremiteacher/tr/ | https://hoshinosoftware.com/doremiteacher/tr/#legal |
