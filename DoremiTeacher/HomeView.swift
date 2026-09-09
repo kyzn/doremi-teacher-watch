@@ -26,14 +26,6 @@ struct HomeView: View {
                         Text("Settings")
                             .frame(maxWidth: .infinity)
                     }
-
-                    #if DEBUG
-                    NavigationLink(destination: ToneCheckView()) {
-                        Text("Tone check")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .tint(.orange)
-                    #endif
                 }
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)

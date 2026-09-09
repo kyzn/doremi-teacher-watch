@@ -31,7 +31,6 @@ DoremiTeacher/               watch app target
   TonePlayer.swift           AVAudioEngine playback of one finite buffer per sound
   VolumeView.swift           Digital Crown volume control
   FillButtonStyle.swift      buttons that share a screen's height (no scrolling in rounds)
-  ToneCheckView.swift        DEBUG-only register audibility test, C4–B5
   Assets.xcassets            AppIcon (1024, from design/icons), AccentColor
   en/ja/tr.lproj             InfoPlist.strings + Localizable.strings
 DoremiTeacherContainer/      iOS container, no code at all
@@ -58,9 +57,6 @@ xcrun simctl boot "Apple Watch Series 11 (46mm)"
 xcrun simctl install booted "build/DerivedData/Build/Products/Debug-watchsimulator/Doremi Teacher Watch App.app"
 xcrun simctl launch booted com.hoshinosoftware.doremiteacher.watchkitapp
 ```
-
-Debug builds add a **Tone check** row that plays each natural from C4 to B5, to
-decide the playback register on a real watch speaker.
 
 ## Install on a paired watch
 
