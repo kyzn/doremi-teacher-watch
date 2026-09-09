@@ -28,6 +28,18 @@ Yalnızca Apple Watch’ta çalışır; iPhone gerekmez. Hesap yok, reklam yok, 
 
 İlk sürüm.
 
+# Support URL
+
+https://hoshinosoftware.com/doremiteacher/tr/#support
+
+# Marketing URL
+
+https://hoshinosoftware.com/doremiteacher/tr/
+
+# Privacy Policy URL
+
+https://hoshinosoftware.com/doremiteacher/tr/#legal
+
 # Keywords
 
 kulak eğitimi,solfej,do re mi,nota,müzik,teori,saz,bağlama,aralık,dinleme,quiz,alıştırma,pratik,ses

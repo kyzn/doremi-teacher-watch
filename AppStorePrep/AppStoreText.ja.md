@@ -28,6 +28,18 @@ Apple Watch だけで動作し、iPhone は必要ありません。アカウン�
 
 初回リリースです。
 
+# Support URL
+
+https://hoshinosoftware.com/doremiteacher/ja/#support
+
+# Marketing URL
+
+https://hoshinosoftware.com/doremiteacher/ja/
+
+# Privacy Policy URL
+
+https://hoshinosoftware.com/doremiteacher/ja/#legal
+
 # Keywords
 
 聴音,ソルフェージュ,ドレミ,音感,音程,音名,音楽,楽典,サズ,バーラマ,練習,クイズ,トレーニング,耳

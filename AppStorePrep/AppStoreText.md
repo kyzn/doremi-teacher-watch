@@ -28,6 +28,18 @@ Runs on the watch alone. No iPhone app, no account, no ads, no tracking, no data
 
 First release.
 
+# Support URL
+
+https://hoshinosoftware.com/doremiteacher/en/#support
+
+# Marketing URL
+
+https://hoshinosoftware.com/doremiteacher/en/
+
+# Privacy Policy URL
+
+https://hoshinosoftware.com/doremiteacher/en/#legal
+
 # Keywords
 
 ear training,solfege,do re mi,pitch,notes,music,theory,saz,baglama,interval,listening,quiz,practice,trainer
