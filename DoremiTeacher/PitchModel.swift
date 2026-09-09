@@ -76,11 +76,17 @@ enum PlaybackRegister {
         PitchMath.frequency(midi: baseMidi + Double(concert.centsAboveC) / 100)
     }
 
-    /// The watch speaker gets louder with frequency across this octave, so the low end is
-    /// pushed harder and the top end pulled back to even out perceived loudness.
+    /// The watch speaker gets louder with frequency across this octave, enough that a
+    /// learner could guess the note from its volume. A straight-line cut to 60% at B5 was
+    /// not enough on the wrist, so the gain now falls as a power of the frequency ratio:
+    /// C5 1.00, E5 0.66, G5 0.48, B5 0.32.
+    static let loudnessExponent = 1.8
+    static let minimumAmplitude: Float = 0.25
+
     static func amplitude(forFrequency hz: Double) -> Float {
-        let low = 523.25, high = 987.77
-        let t = min(max((hz - low) / (high - low), 0), 1)
-        return Float(1.0 - 0.4 * t)
+        let low = 523.25
+        guard hz > low else { return 1.0 }
+        let gain = Float(pow(low / hz, loudnessExponent))
+        return max(minimumAmplitude, min(1.0, gain))
     }
 }
