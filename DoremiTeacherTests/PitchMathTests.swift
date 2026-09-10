@@ -52,14 +52,18 @@ final class ToneSynthTests: XCTestCase {
         let low = ToneSynth.samples(for: [.tone(523.25, 0.2)], sampleRate: 8_000).map(abs).max()!
         let high = ToneSynth.samples(for: [.tone(987.77, 0.2)], sampleRate: 8_000).map(abs).max()!
         XCTAssertEqual(low, 1.0, accuracy: 0.02)
-        XCTAssertEqual(high, 0.32, accuracy: 0.02)
+        XCTAssertEqual(high, PlaybackRegister.gainTable.last!, accuracy: 0.02)
         XCTAssertEqual(PlaybackRegister.amplitude(forFrequency: 100), 1.0)
-        XCTAssertEqual(PlaybackRegister.amplitude(forFrequency: 659.26), 0.66, accuracy: 0.01)
-        XCTAssertEqual(PlaybackRegister.amplitude(forFrequency: 783.99), 0.48, accuracy: 0.01)
-        XCTAssertEqual(PlaybackRegister.amplitude(forFrequency: 5_000), PlaybackRegister.minimumAmplitude)
-        // Monotonic: no note in the register is louder than the one below it.
+        XCTAssertEqual(PlaybackRegister.amplitude(forFrequency: 5_000), PlaybackRegister.gainTable.last!)
+        // Each semitone in the register reads its own table entry, and the table only falls.
         let gains = PitchClass.twelve.map { PlaybackRegister.amplitude(forFrequency: PlaybackRegister.frequency(for: $0)) }
+        for (gain, entry) in zip(gains, PlaybackRegister.gainTable) {
+            XCTAssertEqual(gain, entry, accuracy: 0.001)
+        }
         XCTAssertEqual(gains, gains.sorted(by: >))
+        // Halfway between two semitones interpolates.
+        let quarterTone = PitchMath.frequency(centsFromA4: PitchMath.cents(fromA4: 523.25)! + 50)
+        XCTAssertEqual(PlaybackRegister.amplitude(forFrequency: quarterTone), (1.00 + 0.88) / 2, accuracy: 0.01)
     }
 
     func testRestsAreSilentAndTonesRamp() {

@@ -77,16 +77,31 @@ enum PlaybackRegister {
     }
 
     /// The watch speaker gets louder with frequency across this octave, enough that a
-    /// learner could guess the note from its volume. A straight-line cut to 60% at B5 was
-    /// not enough on the wrist, so the gain now falls as a power of the frequency ratio:
-    /// C5 1.00, E5 0.66, G5 0.48, B5 0.32.
-    static let loudnessExponent = 1.8
-    static let minimumAmplitude: Float = 0.25
+    /// learner could guess the note from its volume. C5 is the quietest note the speaker
+    /// can produce at full scale, so every other note is pulled down towards it. One gain
+    /// per semitone, tuned on the wrist; between table entries the value is interpolated.
+    static let gainTable: [Float] = [
+        1.00,  // C5
+        0.88,  // C♯5
+        0.76,  // D5
+        0.66,  // E♭5
+        0.58,  // E5
+        0.50,  // F5
+        0.44,  // F♯5
+        0.38,  // G5
+        0.33,  // G♯5
+        0.29,  // A5
+        0.25,  // B♭5
+        0.22,  // B5
+    ]
 
     static func amplitude(forFrequency hz: Double) -> Float {
-        let low = 523.25
-        guard hz > low else { return 1.0 }
-        let gain = Float(pow(low / hz, loudnessExponent))
-        return max(minimumAmplitude, min(1.0, gain))
+        guard hz > 0 else { return 1.0 }
+        let semitones = 12 * log2(hz / PitchMath.frequency(midi: baseMidi))
+        guard semitones > 0 else { return gainTable[0] }
+        guard semitones < Double(gainTable.count - 1) else { return gainTable[gainTable.count - 1] }
+        let lower = Int(semitones.rounded(.down))
+        let t = Float(semitones - Double(lower))
+        return gainTable[lower] * (1 - t) + gainTable[lower + 1] * t
     }
 }
