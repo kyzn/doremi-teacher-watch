@@ -36,7 +36,7 @@ enum ToneSynth {
         segments.reduce(0) { $0 + $1.duration } + trailingSilenceDuration
     }
 
-    static func samples(for segments: [ToneSegment], sampleRate: Double) -> [Float] {
+    static func samples(for segments: [ToneSegment], sampleRate: Double, partials: [Float] = partials) -> [Float] {
         var output: [Float] = []
         output.reserveCapacity(Int(totalDuration(segments) * sampleRate) + 1)
         let rampFrames = max(1, Int(rampDuration * sampleRate))

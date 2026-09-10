@@ -79,16 +79,21 @@ final class TonePlayer: ObservableObject, TonePlaying {
     }
 
     func play(_ segments: [ToneSegment], completion: @escaping (PlaybackOutcome) -> Void) {
-        play(segments, completion: completion, isRetry: false)
+        play(segments, partials: ToneSynth.partials, completion: completion, isRetry: false)
     }
 
-    private func play(_ segments: [ToneSegment], completion: @escaping (PlaybackOutcome) -> Void, isRetry: Bool) {
+    /// Same as `play`, with an explicit overtone mix. Used by the debug Sound lab.
+    func play(_ segments: [ToneSegment], partials: [Float], completion: @escaping (PlaybackOutcome) -> Void) {
+        play(segments, partials: partials, completion: completion, isRetry: false)
+    }
+
+    private func play(_ segments: [ToneSegment], partials: [Float], completion: @escaping (PlaybackOutcome) -> Void, isRetry: Bool) {
         cancelCurrent()
         generation &+= 1
         let currentGeneration = generation
         self.completion = completion
 
-        guard let buffer = makeBuffer(for: segments) else {
+        guard let buffer = makeBuffer(for: segments, partials: partials) else {
             finish(.failed("Could not build the sound."), generation: currentGeneration)
             return
         }
@@ -129,7 +134,7 @@ final class TonePlayer: ObservableObject, TonePlaying {
             } else {
                 let pending = self.completion
                 self.completion = nil
-                self.play(segments, completion: pending ?? { _ in }, isRetry: true)
+                self.play(segments, partials: partials, completion: pending ?? { _ in }, isRetry: true)
             }
         }
         watchdog = item
@@ -169,8 +174,8 @@ final class TonePlayer: ObservableObject, TonePlaying {
         pending?(outcome)
     }
 
-    private func makeBuffer(for segments: [ToneSegment]) -> AVAudioPCMBuffer? {
-        let samples = ToneSynth.samples(for: segments, sampleRate: format.sampleRate)
+    private func makeBuffer(for segments: [ToneSegment], partials: [Float]) -> AVAudioPCMBuffer? {
+        let samples = ToneSynth.samples(for: segments, sampleRate: format.sampleRate, partials: partials)
         guard !samples.isEmpty,
               let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(samples.count)),
               let channel = buffer.floatChannelData?[0] else { return nil }
