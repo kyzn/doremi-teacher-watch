@@ -4,7 +4,7 @@ This is a small standalone Apple Watch app for ear training: a note plays and th
 
 To answer your questions directly:
 
-1. Demo: A video is attached, filmed on an Apple Watch Series 10 running the latest watchOS. Apple Watch has no built-in screen recording, so it is filmed with an iPhone. It shows the complete app: launch, a round (a note plays, the user picks one of four names, sees the result, taps Next), the Settings screen including the My instrument mapping, and the Stats screen. That is the entire app. There are no accounts and no user-generated content.
+1. Demo: A video is attached, filmed on an Apple Watch Series 10 running the latest watchOS. Apple Watch has no built-in screen recording, so it was captured through Apple Watch Mirroring on an iPhone, using the iPhone's screen recording. It shows the complete app: launch, a round (a note plays, the user picks one of four names, sees the result, taps Next), the Settings screen including the My instrument mapping, and the Stats screen. That is the entire app. There are no accounts and no user-generated content.
 
 2. Purpose and audience: A practice tool for music learners who want to recognize notes by ear, from beginners learning Do Re Mi to players of instruments that name notes differently from concert pitch (for example the saz, where the string called Re commonly sounds E). It solves the problem that ear training needs many short repetitions with immediate correction, and a watch is always on the wrist for a quick round. The My instrument setting lets the app use the learner's own note names.
 
