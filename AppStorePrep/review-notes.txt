@@ -1,17 +1,37 @@
 This is a standalone watchOS app. There is no iPhone app, no account, no
-microphone use, and no network access of any kind.
+microphone use, no network access, and no third-party code.
 
-How to use it:
+DEMO VIDEO: attached in the Resolution Center (filmed on a physical Apple
+Watch Series 10; watchOS has no screen recording, so it is filmed with an
+iPhone). It shows launch, a round, Settings with the My instrument mapping,
+and Stats. That is the entire app.
+
+PURPOSE AND AUDIENCE: Ear training for music learners: a note plays, the
+user names it. Made with saz players in mind, where the string called Re
+commonly sounds E; the My instrument setting lets the app use the learner's
+own note names.
+
+SETUP AND ACCESS: None. Launch the app and tap Start.
 - Start: a note plays automatically. Tap one of the four names to answer.
   Replay is unlimited before answering. Next plays a new note.
-- Settings: choose Do Re Mi or A B C names; choose Standard pitch or
-  "My instrument" (e.g. a saz whose Re sounds like E, which shifts every name);
-  choose seven notes or notes with sharps/flats.
+- Settings: Note names (Do Re Mi or A B C); Names follow (Standard, or
+  My instrument, e.g. "My Re sounds like E", which shifts every name);
+  Notes to practice (seven notes, or with sharps/flats).
 - Stats: swipe between Total, Seven notes, and With sharps/flats.
 - The Digital Crown adjusts volume on the practice screens.
+No logins, credentials, or sample files.
 
-Sound plays through the watch speaker or connected Bluetooth headphones. On the
-watchOS Simulator sound plays through the Mac.
+EXTERNAL SERVICES: None. No network access. Tones are synthesized on the
+watch. No data providers, authentication, payments, analytics, or AI.
 
-Privacy: no data is collected or transmitted. Settings and correct/wrong counts
-are stored only on the watch.
+REGIONAL DIFFERENCES: None. Identical in every region. UI localized into
+English, Japanese, and Turkish; Japanese shows solfège in katakana.
+
+REGULATED CONTENT: Not applicable. No protected third-party material.
+
+TESTED ON: Apple Watch Series 10 (watchOS 26) on the wrist, plus SE 3 40mm
+and Series 11 46mm simulators. Sound plays through the watch speaker or
+Bluetooth headphones; on the simulator through the Mac.
+
+PRIVACY: No data is collected or transmitted. Settings and the correct/wrong
+counts are stored only on the watch.
