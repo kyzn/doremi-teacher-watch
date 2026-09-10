@@ -1,9 +1,9 @@
 This is a standalone watchOS app. There is no iPhone app, no account, no
 microphone use, no network access, and no third-party code.
 
-DEMO VIDEO: attached in the Resolution Center (filmed on a physical Apple
-Watch Series 10; watchOS has no screen recording, so it is filmed with an
-iPhone). It shows launch, a round, Settings with the My instrument mapping,
+DEMO VIDEO: attached in the Resolution Center (recorded from a physical Apple
+Watch Series 10 through Apple Watch Mirroring on an iPhone, since watchOS has
+no screen recording of its own). It shows launch, a round, Settings with the My instrument mapping,
 and Stats. That is the entire app.
 
 PURPOSE AND AUDIENCE: Ear training for music learners: a note plays, the
