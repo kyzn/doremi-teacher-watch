@@ -63,7 +63,7 @@ final class ToneSynthTests: XCTestCase {
         XCTAssertEqual(gains, gains.sorted(by: >))
         // Halfway between two semitones interpolates.
         let quarterTone = PitchMath.frequency(centsFromA4: PitchMath.cents(fromA4: 523.25)! + 50)
-        XCTAssertEqual(PlaybackRegister.amplitude(forFrequency: quarterTone), (1.00 + 0.88) / 2, accuracy: 0.01)
+        XCTAssertEqual(PlaybackRegister.amplitude(forFrequency: quarterTone), (PlaybackRegister.gainTable[0] + PlaybackRegister.gainTable[1]) / 2, accuracy: 0.01)
     }
 
     func testEveryToneCarriesTheSameOvertoneMix() {
