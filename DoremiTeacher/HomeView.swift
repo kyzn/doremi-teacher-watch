@@ -27,6 +27,14 @@ struct HomeView: View {
                         Text("Settings")
                             .frame(maxWidth: .infinity)
                     }
+
+                    #if true // sound-lab branch: lab in TestFlight builds too
+                    NavigationLink(destination: SoundLabView()) {
+                        Text(verbatim: "Sound lab")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .tint(.orange)
+                    #endif
                 }
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
