@@ -79,21 +79,22 @@ enum PlaybackRegister {
     /// The watch speaker gets louder with frequency across this octave, enough that a
     /// learner could guess the note from its volume. C5 is the quietest note the speaker
     /// can produce at full scale, so every other note is pulled down towards it. One gain
-    /// per semitone, chosen on the wrist from the debug Sound lab on 11 September 2026
-    /// (the "steeper table" variation); between table entries the value is interpolated.
+    /// per semitone, chosen on the wrist from the Sound lab on 25 October 2026 (the "medium"
+    /// table with rich overtones; the steeper 11 September table made high notes too quiet);
+    /// between table entries the value is interpolated.
     static let gainTable: [Float] = [
         1.00,  // C5
-        0.80,  // C♯5
-        0.62,  // D5
-        0.50,  // E♭5
-        0.40,  // E5
-        0.33,  // F5
-        0.28,  // F♯5
-        0.24,  // G5
-        0.20,  // G♯5
-        0.17,  // A5
-        0.15,  // B♭5
-        0.13,  // B5
+        0.88,  // C♯5
+        0.77,  // D5
+        0.68,  // E♭5
+        0.60,  // E5
+        0.53,  // F5
+        0.47,  // F♯5
+        0.42,  // G5
+        0.38,  // G♯5
+        0.34,  // A5
+        0.31,  // B♭5
+        0.28,  // B5
     ]
 
     static func amplitude(forFrequency hz: Double) -> Float {

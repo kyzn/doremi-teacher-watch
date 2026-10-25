@@ -68,7 +68,7 @@ final class ToneSynthTests: XCTestCase {
 
     func testEveryToneCarriesTheSameOvertoneMix() {
         // Same partial levels for C5 and B5: the mix must not depend on the note.
-        XCTAssertEqual(ToneSynth.partials.count, 3)
+        XCTAssertEqual(ToneSynth.partials.count, 5)
         XCTAssertEqual(ToneSynth.partials[0], 1.0)
         // Peak normalisation: a tone's loudest sample equals its requested amplitude.
         for hz in [523.25, 659.26, 987.77] {

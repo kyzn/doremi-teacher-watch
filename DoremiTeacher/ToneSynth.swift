@@ -29,8 +29,9 @@ struct ToneSegment: Equatable {
 enum ToneSynth {
     static let rampDuration: TimeInterval = 0.008
     static let trailingSilenceDuration: TimeInterval = 0.080
-    /// Relative levels of the fundamental and its 2nd and 3rd harmonics.
-    static let partials: [Float] = [1.0, 0.6, 0.3]
+    /// Relative levels of the fundamental and its 2nd to 5th harmonics. Chosen on the wrist
+    /// from the Sound lab on 25 October 2026 ("rich"): louder than [1.0, 0.6, 0.3].
+    static let partials: [Float] = [1.0, 0.9, 0.7, 0.5, 0.3]
 
     static func totalDuration(_ segments: [ToneSegment]) -> TimeInterval {
         segments.reduce(0) { $0 + $1.duration } + trailingSilenceDuration
