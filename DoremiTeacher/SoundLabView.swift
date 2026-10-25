@@ -59,6 +59,19 @@ struct SoundLabView: View {
                             .padding(.horizontal, 8)
                     }
                 }
+                NavigationLink(destination: SoundLabTunerView()) {
+                    Text(verbatim: "7 Tune by ear (crown)")
+                        .font(.footnote)
+                        .foregroundColor(.green)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 8)
+                }
+                NavigationLink(destination: SoundLabTunedValuesView()) {
+                    Text(verbatim: "Tuned values")
+                        .font(.footnote)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 8)
+                }
             }
             .lineLimit(2)
             .minimumScaleFactor(0.7)
@@ -120,6 +133,107 @@ struct SoundLabVariationView: View {
             .minimumScaleFactor(0.7)
         }
         .onDisappear(perform: tonePlayer.stop)
+    }
+}
+
+/// Rich overtones, one note at a time: the crown sets the selected note's gain, starting from
+/// the medium table. Values persist so they can be read off "Tuned values".
+enum SoundLabTuning {
+    static let key = "soundLabTunedGains"
+    static let names = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#", "A", "Bb", "B"]
+
+    static func decode(_ stored: String) -> [Double] {
+        let values = stored.split(separator: ",").compactMap { Double($0) }
+        return values.count == 12 ? values : SoundLabVariation.medium.map(Double.init)
+    }
+
+    static func encode(_ gains: [Double]) -> String {
+        gains.map { String(format: "%.2f", $0) }.joined(separator: ",")
+    }
+
+    static func frequency(_ semitone: Int) -> Double {
+        PitchMath.frequency(midi: 72 + Double(semitone))
+    }
+}
+
+struct SoundLabTunerView: View {
+    @EnvironmentObject private var tonePlayer: TonePlayer
+    @AppStorage(SoundLabTuning.key) private var stored = ""
+    @State private var gains: [Double] = SoundLabTuning.decode("")
+    @State private var note = 0
+
+    private var gain: Binding<Double> {
+        Binding(get: { gains[note] }, set: { value in
+            gains[note] = (value * 100).rounded() / 100
+            stored = SoundLabTuning.encode(gains)
+        })
+    }
+
+    var body: some View {
+        VStack(spacing: 6) {
+            HStack(spacing: 4) {
+                Button { note = (note + 11) % 12 } label: { Image(systemName: "chevron.left") }
+                    .buttonStyle(FillButtonStyle())
+                    .frame(width: 34)
+                VStack(spacing: 0) {
+                    Text(verbatim: SoundLabTuning.names[note])
+                        .font(.title3.bold())
+                    Text(verbatim: String(format: "%.2f", gains[note]))
+                        .font(.footnote.monospacedDigit())
+                        .foregroundColor(.green)
+                }
+                .frame(maxWidth: .infinity)
+                .focusable()
+                .digitalCrownRotation(gain, from: 0.05, through: 1.0, by: 0.01,
+                                      sensitivity: .low, isContinuous: false, isHapticFeedbackEnabled: true)
+                Button { note = (note + 1) % 12 } label: { Image(systemName: "chevron.right") }
+                    .buttonStyle(FillButtonStyle())
+                    .frame(width: 34)
+            }
+            .frame(height: 40)
+            HStack(spacing: 6) {
+                Button { play([note]) } label: { Text(verbatim: "Note") }
+                    .buttonStyle(FillButtonStyle(tint: .accentColor))
+                Button { play([0, note]) } label: { Text(verbatim: "C, note") }
+                    .buttonStyle(FillButtonStyle())
+            }
+            .frame(height: 40)
+            Button { play(Array(0..<12)) } label: { Label("Play all", systemImage: "play.fill") }
+                .buttonStyle(FillButtonStyle())
+                .frame(height: 36)
+        }
+        .lineLimit(1)
+        .minimumScaleFactor(0.7)
+        .onAppear { gains = SoundLabTuning.decode(stored) }
+        .onDisappear(perform: tonePlayer.stop)
+    }
+
+    private func play(_ notes: [Int]) {
+        var segments: [ToneSegment] = []
+        for semitone in notes {
+            segments.append(.tone(SoundLabTuning.frequency(semitone), 0.6, amplitude: Float(gains[semitone])))
+            segments.append(.rest(0.25))
+        }
+        tonePlayer.play(segments, partials: SoundLabVariation.rich) { _ in }
+    }
+}
+
+struct SoundLabTunedValuesView: View {
+    @AppStorage(SoundLabTuning.key) private var stored = ""
+
+    var body: some View {
+        let gains = SoundLabTuning.decode(stored)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 2) {
+                ForEach(0..<12, id: \.self) { semitone in
+                    Text(verbatim: "\(SoundLabTuning.names[semitone])  \(String(format: "%.2f", gains[semitone]))")
+                        .font(.footnote.monospacedDigit())
+                }
+                Button(role: .destructive) { stored = "" } label: { Text(verbatim: "Reset to medium") }
+                    .padding(.top, 6)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
 }
 #endif
