@@ -16,8 +16,8 @@ Bubble Level.
 | Bundle ID (container) | `com.hoshinosoftware.doremiteacher` |
 | Bundle ID (watch app) | `com.hoshinosoftware.doremiteacher.watchkitapp` |
 | Apple ID (App Store Connect) | 6810227571 |
-| Support / privacy | per locale, in each `AppStorePrep/AppStoreText*.md` |
-| Version | 1.0 |
+| Support / privacy | per locale, in `../app-store-prep/text/*.md` |
+| Version | 1.1 |
 | Deployment target | watchOS 8.0 (Series 3 and later), iOS 15.0 container |
 | Architectures | armv7k, arm64_32, arm64 |
 
@@ -40,6 +40,7 @@ DoremiTeacherContainer/      iOS container, no code at all
 DoremiTeacherTests/          XCTest, runs on the watch simulator
 scripts/                     watchOS 8 floor check, clock OCR
 design/icons/                icon source files and prompts
+../app-store-prep/           store text, review notes, creative, screenshots (own local repo)
 ```
 
 Both catalogs carry the same 1024×1024 PNG from `design/icons/` (no alpha

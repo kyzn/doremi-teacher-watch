@@ -13,7 +13,7 @@
 #   sudo -v                                   # cache credentials for 15 minutes
 #   PIN_TIME=09:41:00 ./scripts/capture-screenshots.sh
 #
-# Verify afterwards with: swift scripts/read-clock.swift AppStorePrep/screenshots/*/*.png
+# Verify afterwards with: swift scripts/read-clock.swift ../app-store-prep/screenshots/*/*.png
 #
 set -euo pipefail
 
@@ -84,7 +84,7 @@ fi
 
 for loc in "${LOCALES[@]}"; do
   lang="${loc%%:*}"; locale="${loc##*:}"
-  out="$ROOT/AppStorePrep/screenshots/$lang"
+  out="$ROOT/../app-store-prep/screenshots/$lang"
   mkdir -p "$out"
 
   eval "shots=(\"\${SHOTS_${lang}[@]}\")"
@@ -102,5 +102,5 @@ for loc in "${LOCALES[@]}"; do
 done
 
 echo "==> Done. Sizes:"
-find "$ROOT/AppStorePrep/screenshots" -name "*.png" -exec sips -g pixelWidth -g pixelHeight {} \; 2>/dev/null |
+find "$ROOT/../app-store-prep/screenshots" -name "*.png" -exec sips -g pixelWidth -g pixelHeight {} \; 2>/dev/null |
   grep -E "pixel" | sort | uniq -c
