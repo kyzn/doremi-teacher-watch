@@ -59,8 +59,7 @@ struct ListeningView: View {
                 .buttonStyle(FillButtonStyle(tint: session.playbackError == nil ? .accentColor : .red))
                 .disabled(session.isPlaying)
 
-                VolumeView()
-                    .volumeIndicatorFrame()
+                VolumeIndicator()
             }
             .frame(height: 38)
 

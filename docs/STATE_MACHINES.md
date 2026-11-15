@@ -99,6 +99,15 @@ After the fixes: the generation/completion bookkeeping and the watchdog decision
 owner's `.cancelled` before storing the new completion; if that callback starts a newer sound, the
 newer one wins and the interrupted `begin` reports `.cancelled` to its own caller.
 
+Added 2026-11-15 (AirPods): a **Warming** state. On an engine configuration change (output
+switched), while a practice screen holds the session (`sessionActive`), the player restarts the
+engine (3 tries, 0.5 s apart) and plays 0.3 s of silence so the Bluetooth link is awake before
+the next tap. Any `play`/`stop` cancels it (`warmUpItem`, `nodeBusy`). A play whose engine start
+fails also retries 3 × 0.5 s before reporting `.failed`. The watchdog now waits
+duration + output latency + 1.5 s, plus 2.5 s on headphones (`PlaybackTiming`), so a slow
+Bluetooth start is no longer mistaken for a stall and replayed. `output` (speaker/headphones)
+drives a headphones badge on the volume circle.
+
 ## 3. Who owns the shared player
 
 Users: `ListeningSession`, `InstrumentView` preview (`SettingsView.swift:238-240`), and

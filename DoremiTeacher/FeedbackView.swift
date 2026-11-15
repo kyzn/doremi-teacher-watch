@@ -72,8 +72,7 @@ struct FeedbackView: View {
                 }
                 .buttonStyle(FillButtonStyle(tint: .accentColor))
 
-                VolumeView()
-                    .volumeIndicatorFrame()
+                VolumeIndicator()
             }
             .frame(height: 40)
         }

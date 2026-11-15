@@ -30,6 +30,30 @@ struct VolumeView: WKInterfaceObjectRepresentable {
     }
 }
 
+/// The crown volume circle as placed beside a button row, with a headphones badge while sound
+/// goes to AirPods or other headphones. watchOS draws the speaker glyph inside the circle and
+/// offers no way to change it, and it keeps a separate volume per output, so the badge tells
+/// the learner which of the two levels the crown is setting.
+struct VolumeIndicator: View {
+    @EnvironmentObject private var tonePlayer: TonePlayer
+
+    var body: some View {
+        VolumeView()
+            .volumeIndicatorFrame()
+            .overlay(alignment: .topTrailing) {
+                if tonePlayer.output == .headphones {
+                    Image(systemName: "headphones")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.accentColor)
+                        .padding(2)
+                        .background(Circle().fill(Color.black))
+                        .offset(x: 3, y: -3)
+                        .accessibilityLabel(Text("Headphones"))
+                }
+            }
+    }
+}
+
 extension View {
     /// Compact crown-volume indicator sized to sit beside a button row.
     func volumeIndicatorFrame() -> some View {
