@@ -9,16 +9,37 @@ struct PracticeSettings: Equatable, Codable {
     var schemaVersion = currentSchemaVersion
     var naming = NoteNaming()
     var noteSet: NoteSet = .seven
+    /// The learner's last instrument mapping, kept while naming is Standard or A B C so that
+    /// choosing My instrument again restores it. Optional on purpose: synthesized Codable
+    /// ignores default values, so a non-optional field would fail to decode 1.0 settings.
+    var lastInstrument: InstrumentMapping?
 
     static let `default` = PracticeSettings()
+    /// The saz example offered the first time: Re sounds E.
+    static let defaultInstrument = InstrumentMapping(reference: .d, soundsLike: PitchClass(centsAboveC: 400))
 
     /// Instrument naming is a syllable feature: letters always mean concert pitches. Called
-    /// whenever settings change so a switch to letters drops back to standard naming.
+    /// whenever settings change: it remembers the current instrument mapping, then makes a
+    /// switch to letters drop back to standard naming.
     mutating func normalize() {
-        if naming.style == .letters, case .instrument = naming.relationship {
-            naming.relationship = .standard
+        if case let .instrument(reference, soundsLike) = naming.relationship {
+            lastInstrument = InstrumentMapping(reference: reference, soundsLike: soundsLike)
+            if naming.style == .letters {
+                naming.relationship = .standard
+            }
         }
     }
+
+    /// Names follow → My instrument: the last mapping, or the saz example the first time.
+    mutating func useInstrumentNaming() {
+        let mapping = lastInstrument ?? Self.defaultInstrument
+        naming.relationship = .instrument(reference: mapping.reference, soundsLike: mapping.soundsLike)
+    }
+}
+
+struct InstrumentMapping: Equatable, Codable {
+    var reference: NaturalName
+    var soundsLike: PitchClass
 }
 
 @MainActor
@@ -44,7 +65,9 @@ final class SettingsStore: ObservableObject {
         if let data = defaults.data(forKey: Self.defaultsKey),
            let stored = try? JSONDecoder().decode(PracticeSettings.self, from: data),
            stored.schemaVersion == PracticeSettings.currentSchemaVersion {
-            settings = stored
+            var normalized = stored
+            normalized.normalize()   // property observers do not run in init
+            settings = normalized
         } else {
             settings = .default
         }

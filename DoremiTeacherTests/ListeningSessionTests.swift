@@ -78,7 +78,7 @@ final class ListeningSessionTests: XCTestCase {
 
     func testHappyPathRecordsExactlyOneCorrectResult() {
         session.play(); player.finish()
-        XCTAssertEqual(session.phase, .awaitingAnswer)
+        XCTAssertEqual(session.phase, .ready)
         session.answer(session.question.target)
         XCTAssertEqual(results.count, 1)
         XCTAssertTrue(results[0].isCorrect)
@@ -106,14 +106,14 @@ final class ListeningSessionTests: XCTestCase {
     func testCancelledPlaybackRequiresFullReplay() {
         session.play()
         player.stop()
-        XCTAssertEqual(session.phase, .awaitingPlayback)
+        XCTAssertEqual(session.phase, .fresh)
         XCTAssertFalse(session.hasHeardQuestion)
     }
 
     func testFailedPlaybackShowsError() {
         session.play(); player.fail("no sound")
         XCTAssertEqual(session.playbackError, "no sound")
-        XCTAssertEqual(session.phase, .awaitingPlayback)
+        XCTAssertEqual(session.phase, .awaitingPlayback(error: "no sound"))
         session.autoplayIfFresh()
         XCTAssertEqual(player.played.count, 1)
     }
@@ -134,7 +134,7 @@ final class ListeningSessionTests: XCTestCase {
         session.next()
         XCTAssertNotEqual(session.question.id, first.id)
         XCTAssertNotEqual(session.question.target, first.target)
-        XCTAssertEqual(session.phase, .playing)
+        XCTAssertEqual(session.phase, .playing(replay: false))
         player.finish()
         session.answer(session.question.target)
         XCTAssertEqual(results.count, 2)
@@ -146,5 +146,77 @@ final class ListeningSessionTests: XCTestCase {
         player.finish()
         session.autoplayIfFresh()
         XCTAssertEqual(player.played.count, 1)
+    }
+
+    // MARK: Regression tests from docs/STATE_MACHINES.md
+
+    /// D1: a Replay cut short (wrist down) keeps the answers open; the note was heard in full.
+    func testCancelledReplayKeepsAnswersOpen() {
+        session.play(); player.finish()
+        session.play()
+        XCTAssertEqual(session.phase, .playing(replay: true))
+        XCTAssertTrue(session.hasHeardQuestion)
+        XCTAssertFalse(session.canAnswer)
+        player.stop()
+        XCTAssertEqual(session.phase, .ready)
+        session.answer(session.question.target)
+        XCTAssertEqual(results.count, 1)
+    }
+
+    func testFailedReplayKeepsAnswersOpenAndShowsError() {
+        session.play(); player.finish()
+        session.play(); player.fail("no sound")
+        XCTAssertEqual(session.phase, .awaitingAnswer(error: "no sound"))
+        XCTAssertTrue(session.canAnswer)
+        session.play()
+        XCTAssertNil(session.playbackError, "a new attempt clears the error")
+        player.finish()
+        XCTAssertEqual(session.phase, .ready)
+    }
+
+    /// B1: Hear again failing used to be ignored; the feedback screen now gets the error.
+    func testFailedHearAgainShowsErrorWithoutRecording() {
+        session.play(); player.finish()
+        let target = session.question.target
+        session.answer(target)
+        session.play(); player.fail("no sound")
+        XCTAssertEqual(session.phase, .feedback(chosen: target, replaying: false, error: "no sound"))
+        XCTAssertEqual(session.playbackError, "no sound")
+        XCTAssertFalse(session.isPlaying)
+        session.play()
+        XCTAssertEqual(session.phase, .feedback(chosen: target, replaying: true, error: nil))
+        player.finish()
+        XCTAssertNil(session.playbackError)
+        XCTAssertEqual(results.count, 1)
+    }
+
+    func testPlayIgnoredWhilePlaying() {
+        session.play()
+        session.play()
+        XCTAssertEqual(player.played.count, 1)
+        player.finish()
+        session.answer(session.question.target)
+        session.play()
+        session.play()
+        XCTAssertEqual(player.played.count, 2)
+    }
+
+    func testNextDuringHearAgainStartsTheNewQuestion() {
+        session.play(); player.finish()
+        let first = session.question
+        session.answer(first.target)
+        session.play()
+        session.next()
+        XCTAssertNotEqual(session.question.id, first.id)
+        XCTAssertEqual(session.phase, .playing(replay: false))
+        player.finish()
+        XCTAssertEqual(session.phase, .ready)
+    }
+
+    func testLeaveWhilePlayingReturnsToFresh() {
+        session.play()
+        session.leave()
+        XCTAssertEqual(session.phase, .fresh)
+        XCTAssertFalse(session.isPlaying)
     }
 }

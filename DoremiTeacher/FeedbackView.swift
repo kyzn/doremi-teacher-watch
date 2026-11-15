@@ -7,6 +7,9 @@ struct FeedbackView: View {
     let question: ListeningQuestion
     let chosen: PitchClass
     let isPlaying: Bool
+    /// The last Hear again could not play. The speaker button turns red, like Retry on the
+    /// question screen, so a silent failure is visible.
+    let playbackFailed: Bool
     let hearAgain: () -> Void
     let next: () -> Void
 
@@ -54,13 +57,14 @@ struct FeedbackView: View {
 
             HStack(spacing: 6) {
                 Button(action: hearAgain) {
-                    Image(systemName: "speaker.wave.2.fill")
+                    Image(systemName: playbackFailed ? "exclamationmark.triangle.fill" : "speaker.wave.2.fill")
                         .font(.body.weight(.semibold))
                 }
-                .buttonStyle(FillButtonStyle())
+                .buttonStyle(FillButtonStyle(tint: playbackFailed ? .red : nil))
                 .frame(width: 48)
                 .disabled(isPlaying)
                 .accessibilityLabel(Text("Hear again"))
+                .accessibilityValue(playbackFailed ? Text("Sound unavailable") : Text(verbatim: ""))
 
                 Button(action: next) {
                     Label("Next", systemImage: "arrow.right")

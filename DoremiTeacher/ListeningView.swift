@@ -6,6 +6,12 @@ struct ListeningView: View {
     private let script = SyllableScript.forCurrentLocale()
 
     init(player: TonePlayer, settings: SettingsStore, stats: StatsStore, demo: DemoLaunch? = nil) {
+        // The autoclosure runs once, when the screen is shown. HomeView re-renders on every
+        // sound and settings change, so building the session here eagerly wasted one per render.
+        _session = StateObject(wrappedValue: Self.makeSession(player: player, settings: settings, stats: stats, demo: demo))
+    }
+
+    private static func makeSession(player: TonePlayer, settings: SettingsStore, stats: StatsStore, demo: DemoLaunch?) -> ListeningSession {
         var generator = QuestionGenerator(rng: SystemRandomNumberGenerator())
         let frozen = settings.settings
         let session = ListeningSession(
@@ -20,17 +26,18 @@ struct ListeningView: View {
         default: break
         }
         #endif
-        _session = StateObject(wrappedValue: session)
+        return session
     }
 
     var body: some View {
         Group {
-            if case let .feedback(chosen) = session.phase {
+            if case let .feedback(chosen, _, _) = session.phase {
                 FeedbackView(
                     isCorrect: chosen == session.question.target,
                     question: session.question,
                     chosen: chosen,
                     isPlaying: session.isPlaying,
+                    playbackFailed: session.playbackError != nil,
                     hearAgain: session.play,
                     next: session.next
                 )
@@ -72,7 +79,7 @@ struct ListeningView: View {
                     }
                 }
             }
-            .disabled(session.phase != .awaitingAnswer)
+            .disabled(!session.canAnswer)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .lineLimit(1)

@@ -108,8 +108,8 @@ struct OptionPicker<Value: Hashable>: View {
     }
 }
 
-/// Standard vs My instrument. Choosing My instrument keeps the last reference, defaulting to
-/// the saz example Re sounds E.
+/// Standard vs My instrument. Choosing My instrument restores the last mapping
+/// (`PracticeSettings.lastInstrument`), defaulting to the saz example Re sounds E.
 struct NamesFollowPicker: View {
     @EnvironmentObject private var settings: SettingsStore
     @Environment(\.presentationMode) private var presentationMode
@@ -122,7 +122,7 @@ struct NamesFollowPicker: View {
                 }
                 row(Text("My instrument"), selected: isInstrument) {
                     if !isInstrument {
-                        settings.settings.naming.relationship = .instrument(reference: .d, soundsLike: PitchClass(centsAboveC: 400))
+                        settings.settings.useInstrumentNaming()
                     }
                 }
             }
@@ -158,12 +158,12 @@ struct InstrumentView: View {
 
     private var reference: NaturalName {
         if case let .instrument(reference, _) = settings.settings.naming.relationship { return reference }
-        return .d
+        return PracticeSettings.defaultInstrument.reference
     }
 
     private var soundsLike: PitchClass {
         if case let .instrument(_, pitch) = settings.settings.naming.relationship { return pitch }
-        return PitchClass(centsAboveC: 400)
+        return PracticeSettings.defaultInstrument.soundsLike
     }
 
     var body: some View {

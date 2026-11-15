@@ -9,6 +9,11 @@ enum PlaybackOutcome: Equatable {
     /// Stopped by `cancel()`/`stop()`, a scene change, or an audio interruption before it finished.
     case cancelled
     case failed(String)
+
+    var errorMessage: String? {
+        if case let .failed(message) = self { return message }
+        return nil
+    }
 }
 
 /// Anything that can play a tone sequence. `TonePlayer` in the app, a fake in tests.
@@ -38,8 +43,7 @@ final class TonePlayer: ObservableObject, TonePlaying {
     private let engine = AVAudioEngine()
     private let playerNode = AVAudioPlayerNode()
     private let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
-    private var generation: UInt64 = 0
-    private var completion: ((PlaybackOutcome) -> Void)?
+    private let tracker = PlaybackTracker()
     private var watchdog: DispatchWorkItem?
     private var observers: [NSObjectProtocol] = []
 
@@ -83,10 +87,8 @@ final class TonePlayer: ObservableObject, TonePlaying {
     }
 
     private func play(_ segments: [ToneSegment], completion: @escaping (PlaybackOutcome) -> Void, isRetry: Bool) {
-        cancelCurrent()
-        generation &+= 1
-        let currentGeneration = generation
-        self.completion = completion
+        stopNode()
+        guard let currentGeneration = tracker.begin(completion) else { return }
 
         guard let buffer = makeBuffer(for: segments) else {
             finish(.failed("Could not build the sound."), generation: currentGeneration)
@@ -119,17 +121,16 @@ final class TonePlayer: ObservableObject, TonePlaying {
         // If the completion never comes, the engine was not really rendering. Restart it and
         // replay once; report a failure if that does not help either.
         let item = DispatchWorkItem { [weak self] in
-            guard let self, self.generation == currentGeneration, self.isPlaying else { return }
+            guard let self else { return }
+            let action = self.tracker.watchdogFired(generation: currentGeneration, isRetry: isRetry)
+            guard action != .ignore else { return }
             Self.logger.error("playback stalled (retry: \(isRetry)); restarting engine")
-            self.playerNode.stop()
+            self.stopNode()
             self.engine.stop()
-            self.isPlaying = false
-            if isRetry {
+            if action == .fail {
                 self.finish(.failed("Sound stalled. Tap to try again."), generation: currentGeneration)
-            } else {
-                let pending = self.completion
-                self.completion = nil
-                self.play(segments, completion: pending ?? { _ in }, isRetry: true)
+            } else if let pending = self.tracker.detach() {
+                self.play(segments, completion: pending, isRetry: true)
             }
         }
         watchdog = item
@@ -147,26 +148,27 @@ final class TonePlayer: ObservableObject, TonePlaying {
     }
 
     private func cancelCurrent() {
-        generation &+= 1
+        stopNode()
+        tracker.cancel()
+    }
+
+    /// Silences the node and disarms the watchdog. Buffer callbacks that `stop()` fires carry
+    /// an old generation by the time they reach the main actor, so the tracker drops them.
+    private func stopNode() {
         watchdog?.cancel()
         watchdog = nil
-        let pending = completion
-        completion = nil
         if isPlaying {
             playerNode.stop()
             isPlaying = false
         }
-        pending?(.cancelled)
     }
 
-    private func finish(_ outcome: PlaybackOutcome, generation expected: UInt64) {
-        guard generation == expected else { return }
+    private func finish(_ outcome: PlaybackOutcome, generation: UInt64) {
+        guard tracker.isCurrent(generation) else { return }
         watchdog?.cancel()
         watchdog = nil
-        let pending = completion
-        completion = nil
         isPlaying = false
-        pending?(outcome)
+        tracker.finish(outcome, generation: generation)
     }
 
     private func makeBuffer(for segments: [ToneSegment]) -> AVAudioPCMBuffer? {
