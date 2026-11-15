@@ -25,7 +25,7 @@ APP="$BUILD/Build/Products/Debug-watchsimulator/Doremi Teacher Watch App.app"
 # Apple Watch Series 11 (46mm), watchOS 26.5 → 416x496. App Store Connect
 # scales that down for every smaller watch.
 UDID="${UDID:-FFF4BF67-1E1A-455C-944A-D0C24AE4FA3A}"
-LOCALES=(en:en_US ja:ja_JP tr:tr_TR)
+LOCALES=(${LOCALES_OVERRIDE:-en:en_US ja:ja_JP tr:tr_TR es:es_ES})
 # name:DEMO_SCREEN:extra env
 # Per-locale shot lists, name:DEMO_SCREEN:extra env. English shows A B C and standard Do Re
 # Mi; Turkish shows Do Re Mi standard and with the saz instrument profile; Japanese shows
@@ -39,6 +39,14 @@ SHOTS_en=(
   "6-stats:stats:DEMO_STATS=14,3,120,41,9,2,80,30"
 )
 SHOTS_tr=(
+  "1-home::"
+  "2-listen:listening:"
+  "3-feedback:feedback-wrong:DEMO_PROFILE=saz"
+  "4-instrument:instrument:DEMO_PROFILE=saz"
+  "5-settings:settings:DEMO_PROFILE=saz"
+  "6-stats:stats:DEMO_STATS=14,3,120,41,9,2,80,30"
+)
+SHOTS_es=(
   "1-home::"
   "2-listen:listening:"
   "3-feedback:feedback-wrong:DEMO_PROFILE=saz"
